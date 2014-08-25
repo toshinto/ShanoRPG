@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace IO
 {
-    public interface Output
+    public interface InputDevice
     {
+        event Func<InputCommand, int> OnInput;
+
+        void RegisterInput(InputCommand cmd, int flags);
     }
 }

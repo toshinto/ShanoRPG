@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace IO
 {
-    public interface Input
+    public enum InputCommand
     {
+        MoveLeft,
+        MoveRight,
+        MoveUp,
+        MoveDown,
+        Attack,
+        CastSpell,
     }
 }
