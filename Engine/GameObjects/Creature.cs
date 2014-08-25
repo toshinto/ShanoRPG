@@ -7,6 +7,21 @@ namespace Engine.GameObjects
 {
     public class Creature : Entity
     {
+        public Creature(string name,int level)
+            : base(name)
+        {
+            this._level = level;
+            BaseLife = 90 + 10 * level;
+            BaseDamage = 10 + 2 * level;
+            BaseDefense = 2 + 0.2 * level;
+            BaseMoveSpeed = 5;
+            BaseDodge = 10;
+        }
+        private readonly  int _level;
+        public override int Level
+        {
+            get { return _level; }
+        }
         public override double MaxLife
         {
             get { return BaseLife; }

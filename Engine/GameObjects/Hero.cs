@@ -8,6 +8,10 @@ namespace Engine.GameObjects
      public class Hero : Entity
     {
          private int _experience;
+
+         /// <summary>
+         /// The current experience of this hero......
+         /// </summary>
          public int Experience
          {
              get { return _experience; }

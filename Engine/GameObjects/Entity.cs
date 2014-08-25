@@ -13,13 +13,22 @@ namespace Engine.GameObjects
         public readonly  string Name;
         public abstract double MaxLife { get; }
         public abstract double MaxMana { get; }
+        public double CurrentMoveSpeed { get { return BaseMoveSpeed; } }
+        public abstract double CurrentDamage { get; }
         public double
             CurrentLife,
             CurrentMana;
         public double BaseLife,
             BaseMana,
             BaseDefense,
-            BaseDodge;
+            BaseDodge,
+            BaseMoveSpeed,
+            BaseDamage;
+
+        public Entity(string name)
+        {
+            this.Name = name;
+        }
     }
      
 }
