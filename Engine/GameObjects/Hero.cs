@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Engine.GameObjects
 {
-    class Hero
+     public class Hero : Entity
     {
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Engine.GameObjects
 {
-    class Entity
+    public abstract class Entity
     {
     }
 }
