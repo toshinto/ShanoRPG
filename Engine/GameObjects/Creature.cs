@@ -16,5 +16,14 @@ namespace Engine.GameObjects
         {
             get { return BaseMana; }
         }
-    }
-}
+
+        public override double CurrentDefense
+        {
+            get { return BaseDefense; }
+        }
+        public override double CurrentDodge
+        {
+            get { return BaseDodge; }
+        }
+     }    
+} 

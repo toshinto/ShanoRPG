@@ -7,6 +7,9 @@ namespace Engine.GameObjects
 {
     public abstract class Entity
     {
+        public abstract int Level { get; }
+        public abstract double CurrentDefense { get; }
+        public abstract double CurrentDodge { get; }
         public readonly  string Name;
         public abstract double MaxLife { get; }
         public abstract double MaxMana { get; }
@@ -14,7 +17,9 @@ namespace Engine.GameObjects
             CurrentLife,
             CurrentMana;
         public double BaseLife,
-            BaseMana;
+            BaseMana,
+            BaseDefense,
+            BaseDodge;
     }
      
 }
