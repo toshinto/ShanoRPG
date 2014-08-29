@@ -7,14 +7,19 @@ namespace Engine.GameObjects
 {
     public abstract class Entity
     {
+        public readonly string Name;
         public abstract int Level { get; }
-        public abstract double CurrentDefense { get; }
-        public abstract double CurrentDodge { get; }
-        public readonly  string Name;
-        public abstract double MaxLife { get; }
-        public abstract double MaxMana { get; }
-        public double CurrentMoveSpeed { get { return BaseMoveSpeed; } }
-        public abstract double CurrentDamage { get; }
+
+
+        public double CurrentDefense { get; protected set; }
+        public double CurrentDodge { get; protected set; }
+        public double MaxLife { get; protected set; }
+        public double MaxMana { get; protected set; }
+        public double CurrentDamage { get; protected set; }
+        public double CurrentMoveSpeed { get; protected set; }
+     
+
+        
         public double
             CurrentLife,
             CurrentMana;
@@ -28,6 +33,10 @@ namespace Engine.GameObjects
         public Entity(string name)
         {
             this.Name = name;
+        }
+        public virtual void UpdateBuffs()
+        {
+            
         }
     }
      
