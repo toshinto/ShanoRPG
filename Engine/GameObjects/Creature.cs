@@ -12,7 +12,8 @@ namespace Engine.GameObjects
         {
             this._level = level;
             BaseLife = 90 + 10 * level;
-            BaseDamage = 10 + 2 * level;
+            BaseMinDamage = 10 + 2 * level;
+            BaseMaxDamage = BaseMinDamage + 5;
             BaseDefense = 2 + 0.2 * level;
             BaseMoveSpeed = 5;
             BaseDodge = 10;
