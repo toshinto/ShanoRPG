@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.BuffSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,9 @@ namespace Engine.GameObjects
         public double MaxMana { get; protected set; }
         public double CurrentDamage { get; protected set; }
         public double CurrentMoveSpeed { get; protected set; }
-     
+
+
+        public List<Buff> Buffs = new List<Buff>();
 
         
         public double

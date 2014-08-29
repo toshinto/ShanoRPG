@@ -7,10 +7,12 @@ namespace Engine.GameObjects
 {
      public class Hero : Entity
     {
-         private int _experience;
+        private const int XpPerLevel = 100;
+
+        private int _experience;
 
          /// <summary>
-         /// The current experience of this hero......
+         /// The current experience of this hero.
          /// </summary>
          public int Experience
          {
@@ -20,7 +22,7 @@ namespace Engine.GameObjects
                  if (value < 0 || value < _experience)
                      throw new Exception("Invalid EXP");
                  _experience = value;
-                 if (_experience > 100 * Level)
+                 if (_experience > XpPerLevel * Level)
                  {
                      _experience = 0;
                      _level++;
@@ -36,6 +38,7 @@ namespace Engine.GameObjects
                 BaseVitality,
                 BaseIntellect,
                 BaseAgility;
+     
          public double CurrentStrength
          {
              get
@@ -70,20 +73,20 @@ namespace Engine.GameObjects
 
          public override double MaxLife 
          {
-             get { return BaseLife + CurrentVitality * ObjectConstants.LifePerVitality  ; }
+             get { return BaseLife + CurrentVitality * ObjectConstants.LifePerVitality; }
          }
 
          public override double MaxMana
          {
-             get { return BaseMana + CurrentMana * ObjectConstants.ManaPerVitality   ; }
+             get { return BaseMana + CurrentMana * ObjectConstants.ManaPerVitality; }
          }
          public override double CurrentDefense
          {
-             get { return BaseDefense + CurrentStrength * ObjectConstants.DefensePerStrength   ; }
+             get { return BaseDefense + CurrentStrength * ObjectConstants.DefensePerStrength; }
          }
          public override double CurrentDodge
          {
-             get { return BaseDodge + CurrentAgility * ObjectConstants.DodgePerAgility ; }
+             get { return BaseDodge + CurrentAgility * ObjectConstants.DodgePerAgility; }
          }
     }
 

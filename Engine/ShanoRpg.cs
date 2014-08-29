@@ -6,8 +6,10 @@ using System.Text;
 
 namespace Engine
 {
-    public class Class1
+    public class ShanoRpg
     {
-        Entity e;
+
+
+
     }
 }
