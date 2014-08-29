@@ -15,7 +15,11 @@ namespace Engine.BuffSystem
             Mana,
             Defense,
             MinDamage,
-            MaxDamage;
+            MaxDamage,
+            Strength,
+            Vitality,
+            Agility,
+            Intellect;
 
         /// <summary>
         /// The total duration of the buff, in seconds. 

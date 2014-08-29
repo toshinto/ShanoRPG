@@ -41,12 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuffSystem\Buff.cs" />
+    <Compile Include="Maps\Map.cs" />
     <Compile Include="ShanoRpg.cs" />
     <Compile Include="GameObjects\Creature.cs" />
     <Compile Include="GameObjects\Entity.cs" />
     <Compile Include="GameObjects\Hero.cs" />
     <Compile Include="GameObjects\ObjectConstants.cs" />
-    <Compile Include="Map\MapTile.cs" />
+    <Compile Include="Maps\MapTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.BuffSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,43 +40,38 @@ namespace Engine.GameObjects
                 BaseIntellect,
                 BaseAgility;
      
-         public double CurrentStrength
-         {
-             get
-             {
-                 return BaseStrength;
-             }
-         }
+         public double CurrentStrength;
+         public double CurrentVitality;
+         public double CurrentIntellect;
+         public double CurrentAgility;
 
-         public double CurrentVitality
-         {
-             get
-             {
-                 return BaseVitality;
-             }
-         }
 
-         public double CurrentIntellect
-         {
-             get
-             {
-                 return BaseIntellect;
-             }
-         }
-
-         public double CurrentAgility
-         {
-             get
-             {
-                 return BaseAgility;
-             }
-         }
 
          public Hero(string name)
              : base(name)
          {
 
          }
+         
+         public override void UpdateBuffs(double secondsElapsed)
+         {
+             //Vika Entity.UpdateBuffs,koeto update-va life,mana,ala bala.
+             base.UpdateBuffs(secondsElapsed);
+             CurrentStrength = BaseStrength;
+             CurrentAgility = BaseAgility;
+             CurrentIntellect = BaseIntellect;
+             CurrentVitality = BaseVitality;
+             for (int i = 0; i < Buffs.Count; i++)
+             {
+              Buff b = Buffs[i];
+              CurrentStrength += b.Strength;
+              CurrentVitality += b.Vitality;
+              CurrentIntellect += b.Intellect;
+              CurrentAgility += b.Agility;
+
+             }
+         }
+         
     }
 
 }
