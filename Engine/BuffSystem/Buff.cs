@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Engine.BuffSystem
 {
-    class Buff
+    public class Buff
     {
         public readonly int MoveSpeedPerc,
             AttackSpeedPerc;

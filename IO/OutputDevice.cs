@@ -12,5 +12,7 @@ namespace IO
         Entity GetEntities(Hero h);
 
 
+        Tile[,] GetNearbyTiles(Hero h);
+
     }
 }
