@@ -23,23 +23,5 @@ namespace Engine.GameObjects
         {
             get { return _level; }
         }
-        public override double MaxLife
-        {
-            get { return BaseLife; }
-        }
-
-        public override double MaxMana
-        {
-            get { return BaseMana; }
-        }
-
-        public override double CurrentDefense
-        {
-            get { return BaseDefense; }
-        }
-        public override double CurrentDodge
-        {
-            get { return BaseDodge; }
-        }
      }    
 } 

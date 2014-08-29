@@ -1,4 +1,5 @@
 ﻿using Engine.GameObjects;
+using Engine.Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace IO
         Entity GetEntities(Hero h);
 
 
-        Tile[,] GetNearbyTiles(Hero h);
+        MapTile[,] GetNearbyTiles(Hero h);
 
     }
 }

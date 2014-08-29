@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Engine.Map
 {
-    enum MapTile
+    public enum MapTile
     {
         Dirt, Grass, Stone, Water
     }

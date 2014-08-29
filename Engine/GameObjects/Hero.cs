@@ -71,22 +71,10 @@ namespace Engine.GameObjects
              }
          }
 
-         public override double MaxLife 
+         public Hero(string name)
+             : base(name)
          {
-             get { return BaseLife + CurrentVitality * ObjectConstants.LifePerVitality; }
-         }
 
-         public override double MaxMana
-         {
-             get { return BaseMana + CurrentMana * ObjectConstants.ManaPerVitality; }
-         }
-         public override double CurrentDefense
-         {
-             get { return BaseDefense + CurrentStrength * ObjectConstants.DefensePerStrength; }
-         }
-         public override double CurrentDodge
-         {
-             get { return BaseDodge + CurrentAgility * ObjectConstants.DodgePerAgility; }
          }
     }
 
