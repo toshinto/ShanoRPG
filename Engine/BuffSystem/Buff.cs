@@ -22,10 +22,13 @@ namespace Engine.BuffSystem
         /// </summary>
         public double Duration;
 
+        public double DurationLeft;
+
         public Buff(double duration, int moveSpeed = 0, int atkSpeed = 0, double life = 0, double mana = 0, 
             double defense = 0, double minDmg = 0, double maxDmg = 0)
         {
             this.Duration = duration;
+            this.DurationLeft = duration;
 
             this.MoveSpeedPerc = moveSpeed;
             this.AttackSpeedPerc = atkSpeed;
