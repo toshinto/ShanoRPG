@@ -10,6 +10,9 @@ namespace Engine
 {
     public class ShanoRpg
     {
+        /// <summary>
+        /// The frames per second we aim to run at. 
+        /// </summary>
         const int FPS = 60;
 
 
@@ -41,11 +44,14 @@ namespace Engine
 
         private void updateLoop()
         {
+            int startTime, drawTime = 0;
             while(true)
             {
-                Thread.Sleep(1000 / FPS);
-
+                Thread.Sleep(1000 / FPS - drawTime);
+                
+                startTime = Environment.TickCount;
                 this.Update();
+                drawTime = Environment.TickCount - startTime;
             }
         }
 

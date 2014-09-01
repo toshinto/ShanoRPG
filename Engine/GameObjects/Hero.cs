@@ -1,4 +1,5 @@
 ﻿using Engine.BuffSystem;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 
 namespace Engine.GameObjects
 {
+    [ProtoContract]
      public class Hero : Entity
     {
         private const int XpPerLevel = 100;
@@ -15,7 +17,8 @@ namespace Engine.GameObjects
          /// <summary>
          /// The current experience of this hero.
          /// </summary>
-         public int Experience
+        [ProtoMember(100)]
+        public int Experience
          {
              get { return _experience; }
              set
@@ -23,9 +26,9 @@ namespace Engine.GameObjects
                  if (value < 0 || value < _experience)
                      throw new Exception("Invalid EXP");
                  _experience = value;
-                 if (_experience > XpPerLevel * Level)
+                 if (_experience > XpPerLevel * _level)
                  {
-                     _experience = 0;
+                     _experience -= XpPerLevel * _level;
                      _level++;
                  }
              }
@@ -35,10 +38,14 @@ namespace Engine.GameObjects
          {
              get { return _level; }
          }
-         public double BaseStrength,
-                BaseVitality,
-                BaseIntellect,
-                BaseAgility;
+         [ProtoMember(101)]
+         public double BaseStrength;
+         [ProtoMember(102)]
+         public double BaseVitality;
+         [ProtoMember(103)]
+         public double BaseIntellect;
+         [ProtoMember(104)]
+         public double BaseAgility;
      
          public double CurrentStrength;
          public double CurrentVitality;
@@ -46,9 +53,12 @@ namespace Engine.GameObjects
          public double CurrentAgility;
 
 
+         protected Hero() : base()
+         {
 
-         public Hero(string name)
-             : base(name)
+         }
+
+         public Hero(string name) : base(name)
          {
 
          }

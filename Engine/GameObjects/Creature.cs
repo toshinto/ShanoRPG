@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ProtoBuf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Engine.GameObjects
 {
+    [ProtoContract]
     public class Creature : Entity
     {
         public Creature(string name,int level)
@@ -18,7 +20,9 @@ namespace Engine.GameObjects
             BaseMoveSpeed = 5;
             BaseDodge = 10;
         }
-        private readonly  int _level;
+
+        [ProtoMember(200)]
+        private int _level { get; set; }
         public override int Level
         {
             get { return _level; }

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Engine.BuffSystem.Buff" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAkAgAACAAABAAAAAAAAAABCAAABAAAAJgABAAA=</HashCode>
+      <FileName>BuffSystem\Buff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine.GameObjects.Creature" Collapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Creature.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine.GameObjects.Entity">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAQAigAACBIEAQAAECAUABAAAAAAhAEAAAAgAMUA=</HashCode>
+      <FileName>GameObjects\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine.GameObjects.Hero" Collapsed="true">
+    <Position X="4" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAQAAAAAAgQACAAAgBQAAAkAAAAABAAAAAAABQAA=</HashCode>
+      <FileName>GameObjects\Hero.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine.GameObjects.ObjectConstants" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAACABAAABAAgAACAAAQAAAAAAAAAAACAA=</HashCode>
+      <FileName>GameObjects\ObjectConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine.Maps.Map" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Maps\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine.ShanoRpg">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gARAAAAAAgAAAAAAAAAAAAAQIAAAAAAAAAAAAAAgAAg=</HashCode>
+      <FileName>ShanoRpg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Engine.Maps.MapTile" Collapsed="true">
+    <Position X="9" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAgAAAAEAAAAAAAAgA=</HashCode>
+      <FileName>Maps\MapTile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
