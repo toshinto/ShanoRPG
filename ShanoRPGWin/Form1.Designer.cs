@@ -28,13 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.ingameHeroPanel1 = new ShanoRPGWin.UI.IngameHeroPanel();
             this.SuspendLayout();
+            // 
+            // ingameHeroPanel1
+            // 
+            this.ingameHeroPanel1.Location = new System.Drawing.Point(235, 219);
+            this.ingameHeroPanel1.Name = "ingameHeroPanel1";
+            this.ingameHeroPanel1.Size = new System.Drawing.Size(377, 127);
+            this.ingameHeroPanel1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 358);
+            this.Controls.Add(this.ingameHeroPanel1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -43,6 +52,8 @@
         }
 
         #endregion
+
+        private UI.IngameHeroPanel ingameHeroPanel1;
     }
 }
 

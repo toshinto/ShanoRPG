@@ -41,7 +41,7 @@
             // lblStr
             // 
             this.lblStr.AutoSize = true;
-            this.lblStr.Location = new System.Drawing.Point(16, 18);
+            this.lblStr.Location = new System.Drawing.Point(15, 18);
             this.lblStr.Name = "lblStr";
             this.lblStr.Size = new System.Drawing.Size(23, 13);
             this.lblStr.TabIndex = 0;
@@ -59,7 +59,7 @@
             // lblAgi
             // 
             this.lblAgi.AutoSize = true;
-            this.lblAgi.Location = new System.Drawing.Point(17, 41);
+            this.lblAgi.Location = new System.Drawing.Point(13, 41);
             this.lblAgi.Name = "lblAgi";
             this.lblAgi.Size = new System.Drawing.Size(25, 13);
             this.lblAgi.TabIndex = 2;
@@ -77,7 +77,7 @@
             // lblVit
             // 
             this.lblVit.AutoSize = true;
-            this.lblVit.Location = new System.Drawing.Point(17, 65);
+            this.lblVit.Location = new System.Drawing.Point(16, 65);
             this.lblVit.Name = "lblVit";
             this.lblVit.Size = new System.Drawing.Size(22, 13);
             this.lblVit.TabIndex = 4;
@@ -95,7 +95,7 @@
             // lblInt
             // 
             this.lblInt.AutoSize = true;
-            this.lblInt.Location = new System.Drawing.Point(17, 93);
+            this.lblInt.Location = new System.Drawing.Point(16, 93);
             this.lblInt.Name = "lblInt";
             this.lblInt.Size = new System.Drawing.Size(22, 13);
             this.lblInt.TabIndex = 6;
@@ -134,12 +134,12 @@
         #endregion
 
         private System.Windows.Forms.Label lblStr;
-        private System.Windows.Forms.Label lblStrNum;
         private System.Windows.Forms.Label lblAgi;
-        private System.Windows.Forms.Label lblAgiNum;
         private System.Windows.Forms.Label lblVit;
-        private System.Windows.Forms.Label lblVitNum;
         private System.Windows.Forms.Label lblInt;
-        private System.Windows.Forms.Label lblIntNum;
+        internal System.Windows.Forms.Label lblStrNum;
+        internal System.Windows.Forms.Label lblAgiNum;
+        internal System.Windows.Forms.Label lblVitNum;
+        internal System.Windows.Forms.Label lblIntNum;
     }
 }

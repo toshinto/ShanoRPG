@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.ExpBar = new System.Windows.Forms.ProgressBar();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // ExpBar
@@ -39,13 +37,6 @@
             this.ExpBar.Name = "ExpBar";
             this.ExpBar.Size = new System.Drawing.Size(280, 23);
             this.ExpBar.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.ExpBar, "66/100");
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.AutoPopDelay = 100;
-            this.toolTip1.InitialDelay = 100;
-            this.toolTip1.ReshowDelay = 100;
             // 
             // ExpPanel
             // 
@@ -60,7 +51,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar ExpBar;
-        private System.Windows.Forms.ToolTip toolTip1;
+        internal System.Windows.Forms.ProgressBar ExpBar;
+
     }
 }
