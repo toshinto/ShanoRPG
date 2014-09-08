@@ -38,7 +38,7 @@
             // 
             this.lblManaNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblManaNum.AutoSize = true;
-            this.lblManaNum.Location = new System.Drawing.Point(56, 37);
+            this.lblManaNum.Location = new System.Drawing.Point(83, 37);
             this.lblManaNum.Name = "lblManaNum";
             this.lblManaNum.Size = new System.Drawing.Size(25, 13);
             this.lblManaNum.TabIndex = 7;
@@ -48,7 +48,7 @@
             // 
             this.lblLifeNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLifeNum.AutoSize = true;
-            this.lblLifeNum.Location = new System.Drawing.Point(56, 10);
+            this.lblLifeNum.Location = new System.Drawing.Point(83, 10);
             this.lblLifeNum.Name = "lblLifeNum";
             this.lblLifeNum.Size = new System.Drawing.Size(25, 13);
             this.lblLifeNum.TabIndex = 6;
@@ -85,7 +85,7 @@
             this.MaximumSize = new System.Drawing.Size(10000, 60);
             this.MinimumSize = new System.Drawing.Size(104, 60);
             this.Name = "LifeManaPanel";
-            this.Size = new System.Drawing.Size(104, 60);
+            this.Size = new System.Drawing.Size(131, 60);
             this.ResumeLayout(false);
             this.PerformLayout();
 

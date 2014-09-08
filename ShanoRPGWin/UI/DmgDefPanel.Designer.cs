@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblMove = new System.Windows.Forms.Label();
             this.lblDef = new System.Windows.Forms.Label();
             this.lblDmg = new System.Windows.Forms.Label();
-            this.lblMove = new System.Windows.Forms.Label();
             this.lblDmgNun = new System.Windows.Forms.Label();
             this.lblDefNum = new System.Windows.Forms.Label();
             this.lblMoveSpeedNum = new System.Windows.Forms.Label();
@@ -56,8 +56,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(209, 89);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(168, 89);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // lblMove
+            // 
+            this.lblMove.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMove.Location = new System.Drawing.Point(0, 58);
+            this.lblMove.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMove.Name = "lblMove";
+            this.lblMove.Size = new System.Drawing.Size(84, 31);
+            this.lblMove.TabIndex = 12;
+            this.lblMove.Text = "MoveSpeed:";
+            this.lblMove.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDef
             // 
@@ -65,7 +76,7 @@
             this.lblDef.Location = new System.Drawing.Point(0, 29);
             this.lblDef.Margin = new System.Windows.Forms.Padding(0);
             this.lblDef.Name = "lblDef";
-            this.lblDef.Size = new System.Drawing.Size(104, 29);
+            this.lblDef.Size = new System.Drawing.Size(84, 29);
             this.lblDef.TabIndex = 14;
             this.lblDef.Text = "Defense:";
             this.lblDef.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -76,29 +87,18 @@
             this.lblDmg.Location = new System.Drawing.Point(0, 0);
             this.lblDmg.Margin = new System.Windows.Forms.Padding(0);
             this.lblDmg.Name = "lblDmg";
-            this.lblDmg.Size = new System.Drawing.Size(104, 29);
+            this.lblDmg.Size = new System.Drawing.Size(84, 29);
             this.lblDmg.TabIndex = 13;
             this.lblDmg.Text = "Damage";
             this.lblDmg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblMove
-            // 
-            this.lblMove.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMove.Location = new System.Drawing.Point(0, 58);
-            this.lblMove.Margin = new System.Windows.Forms.Padding(0);
-            this.lblMove.Name = "lblMove";
-            this.lblMove.Size = new System.Drawing.Size(104, 31);
-            this.lblMove.TabIndex = 12;
-            this.lblMove.Text = "MoveSpeed:";
-            this.lblMove.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblDmgNun
             // 
             this.lblDmgNun.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDmgNun.Location = new System.Drawing.Point(104, 0);
+            this.lblDmgNun.Location = new System.Drawing.Point(84, 0);
             this.lblDmgNun.Margin = new System.Windows.Forms.Padding(0);
             this.lblDmgNun.Name = "lblDmgNun";
-            this.lblDmgNun.Size = new System.Drawing.Size(105, 29);
+            this.lblDmgNun.Size = new System.Drawing.Size(84, 29);
             this.lblDmgNun.TabIndex = 15;
             this.lblDmgNun.Text = "10 - 25";
             this.lblDmgNun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -106,10 +106,10 @@
             // lblDefNum
             // 
             this.lblDefNum.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDefNum.Location = new System.Drawing.Point(104, 29);
+            this.lblDefNum.Location = new System.Drawing.Point(84, 29);
             this.lblDefNum.Margin = new System.Windows.Forms.Padding(0);
             this.lblDefNum.Name = "lblDefNum";
-            this.lblDefNum.Size = new System.Drawing.Size(105, 29);
+            this.lblDefNum.Size = new System.Drawing.Size(84, 29);
             this.lblDefNum.TabIndex = 16;
             this.lblDefNum.Text = "10";
             this.lblDefNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -117,10 +117,10 @@
             // lblMoveSpeedNum
             // 
             this.lblMoveSpeedNum.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMoveSpeedNum.Location = new System.Drawing.Point(104, 58);
+            this.lblMoveSpeedNum.Location = new System.Drawing.Point(84, 58);
             this.lblMoveSpeedNum.Margin = new System.Windows.Forms.Padding(0);
             this.lblMoveSpeedNum.Name = "lblMoveSpeedNum";
-            this.lblMoveSpeedNum.Size = new System.Drawing.Size(105, 31);
+            this.lblMoveSpeedNum.Size = new System.Drawing.Size(84, 31);
             this.lblMoveSpeedNum.TabIndex = 17;
             this.lblMoveSpeedNum.Text = "3.2";
             this.lblMoveSpeedNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -131,7 +131,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DmgDefPanel";
-            this.Size = new System.Drawing.Size(209, 89);
+            this.Size = new System.Drawing.Size(168, 89);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ShanoRPGWin.UI
 {
-    public partial class DmgDefPanel : AbstractHeroPanel
+    public partial class DmgDefPanel : UserControl
     {
         public DmgDefPanel()
         {
