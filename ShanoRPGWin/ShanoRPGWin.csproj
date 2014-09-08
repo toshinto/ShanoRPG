@@ -114,9 +114,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IO\IO.csproj">
+    <ProjectReference Include="..\IO\Output.csproj">
       <Project>{dc89987d-5817-4f1d-95ca-80c024c8d6bb}</Project>
-      <Name>IO</Name>
+      <Name>Output</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Input;
 
 namespace Engine
 {
@@ -15,6 +16,7 @@ namespace Engine
         /// </summary>
         const int FPS = 60;
 
+        public InputDevice LocalInput;
 
         public readonly Thread MainThread;
 
