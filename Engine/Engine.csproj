@@ -47,13 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuffSystem\Buff.cs" />
+    <Compile Include="Objects\Buff.cs" />
+    <Compile Include="Systems\Ability.cs" />
+    <Compile Include="Systems\NPCCombat.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="ShanoRpg.cs" />
-    <Compile Include="GameObjects\Creature.cs" />
-    <Compile Include="GameObjects\Entity.cs" />
-    <Compile Include="GameObjects\Hero.cs" />
-    <Compile Include="GameObjects\ObjectConstants.cs" />
+    <Compile Include="Objects\Creature.cs" />
+    <Compile Include="Objects\Entity.cs" />
+    <Compile Include="Objects\Hero.cs" />
+    <Compile Include="Objects\ObjectConstants.cs" />
     <Compile Include="Maps\MapTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

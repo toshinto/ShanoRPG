@@ -34,7 +34,7 @@
             // 
             // LifeManaPanel
             // 
-            this.LifeManaPanel.Location = new System.Drawing.Point(210, 420);
+            this.LifeManaPanel.Location = new System.Drawing.Point(346, 341);
             this.LifeManaPanel.MaximumSize = new System.Drawing.Size(10000, 60);
             this.LifeManaPanel.MinimumSize = new System.Drawing.Size(104, 60);
             this.LifeManaPanel.Name = "LifeManaPanel";
@@ -44,7 +44,7 @@
             // 
             // damageDefenseMoveSpeed1
             // 
-            this.damageDefenseMoveSpeed1.Location = new System.Drawing.Point(320, 392);
+            this.damageDefenseMoveSpeed1.Location = new System.Drawing.Point(499, 326);
             this.damageDefenseMoveSpeed1.MaximumSize = new System.Drawing.Size(10000, 146);
             this.damageDefenseMoveSpeed1.MinimumSize = new System.Drawing.Size(140, 88);
             this.damageDefenseMoveSpeed1.Name = "damageDefenseMoveSpeed1";

@@ -41,6 +41,7 @@
             this.lblMoveNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMoveNum.AutoSize = true;
             this.lblMoveNum.Location = new System.Drawing.Point(84, 58);
+            this.lblMoveNum.Margin = new System.Windows.Forms.Padding(12);
             this.lblMoveNum.Name = "lblMoveNum";
             this.lblMoveNum.Size = new System.Drawing.Size(13, 13);
             this.lblMoveNum.TabIndex = 8;
@@ -50,7 +51,8 @@
             // 
             this.lblMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblMove.AutoSize = true;
-            this.lblMove.Location = new System.Drawing.Point(3, 58);
+            this.lblMove.Location = new System.Drawing.Point(12, 58);
+            this.lblMove.Margin = new System.Windows.Forms.Padding(12);
             this.lblMove.Name = "lblMove";
             this.lblMove.Size = new System.Drawing.Size(68, 13);
             this.lblMove.TabIndex = 7;
@@ -60,7 +62,8 @@
             // 
             this.lblDmgNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDmgNum.AutoSize = true;
-            this.lblDmgNum.Location = new System.Drawing.Point(84, 10);
+            this.lblDmgNum.Location = new System.Drawing.Point(84, 35);
+            this.lblDmgNum.Margin = new System.Windows.Forms.Padding(12);
             this.lblDmgNum.Name = "lblDmgNum";
             this.lblDmgNum.Size = new System.Drawing.Size(34, 13);
             this.lblDmgNum.TabIndex = 10;
@@ -70,7 +73,8 @@
             // 
             this.lblDmg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblDmg.AutoSize = true;
-            this.lblDmg.Location = new System.Drawing.Point(6, 10);
+            this.lblDmg.Location = new System.Drawing.Point(12, 12);
+            this.lblDmg.Margin = new System.Windows.Forms.Padding(12);
             this.lblDmg.Name = "lblDmg";
             this.lblDmg.Size = new System.Drawing.Size(47, 13);
             this.lblDmg.TabIndex = 9;
@@ -80,7 +84,8 @@
             // 
             this.lblDefNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDefNum.AutoSize = true;
-            this.lblDefNum.Location = new System.Drawing.Point(84, 32);
+            this.lblDefNum.Location = new System.Drawing.Point(84, 12);
+            this.lblDefNum.Margin = new System.Windows.Forms.Padding(12);
             this.lblDefNum.Name = "lblDefNum";
             this.lblDefNum.Size = new System.Drawing.Size(19, 13);
             this.lblDefNum.TabIndex = 12;
@@ -90,7 +95,8 @@
             // 
             this.lblDef.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblDef.AutoSize = true;
-            this.lblDef.Location = new System.Drawing.Point(6, 32);
+            this.lblDef.Location = new System.Drawing.Point(12, 35);
+            this.lblDef.Margin = new System.Windows.Forms.Padding(12);
             this.lblDef.Name = "lblDef";
             this.lblDef.Size = new System.Drawing.Size(50, 13);
             this.lblDef.TabIndex = 11;

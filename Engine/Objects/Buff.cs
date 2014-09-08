@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Engine.BuffSystem
+namespace Engine.Objects
 {
     public class Buff
     {

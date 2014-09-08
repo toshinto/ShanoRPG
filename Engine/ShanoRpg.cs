@@ -1,4 +1,4 @@
-﻿using Engine.GameObjects;
+﻿using Engine.Objects;
 using Engine.Maps;
 using System;
 using System.Collections.Generic;
@@ -18,14 +18,37 @@ namespace Engine
 
         public readonly Thread MainThread;
 
+        /// <summary>
+        /// The current world map. 
+        /// </summary>
         Map WorldMap;
 
+        /// <summary>
+        /// A list of all the (spawned) monsters in the game. 
+        /// </summary>
         List<Creature> Monsters;
 
+        /// <summary>
+        /// A list of all heroes in the game. 
+        /// </summary>
         List<Hero> Heroes;
 
         /// <summary>
-        /// Points to the hero that the local player plays with. 
+        /// Gets all entities currently in the game. 
+        /// </summary>
+        public IEnumerable<Entity> Entities
+        {
+            get
+            {
+                foreach (var m in Monsters)
+                    yield return m;
+                foreach (var h in Heroes)
+                    yield return h;
+            }
+        }
+
+        /// <summary>
+        /// The hero that the local player uses. 
         /// </summary>
         readonly Hero LocalHero;
 
@@ -38,20 +61,23 @@ namespace Engine
 
             this.LocalHero = localHero;
 
-
+            //start the update thread
             this.MainThread = new Thread(updateLoop);
         }
 
+        /// <summary>
+        /// Performs the basic game loop. 
+        /// </summary>
         private void updateLoop()
         {
-            int startTime, drawTime = 0;
+            int frameStartTime, drawTime = 0;
             while(true)
             {
                 Thread.Sleep(1000 / FPS - drawTime);
                 
-                startTime = Environment.TickCount;
+                frameStartTime = Environment.TickCount;
                 this.Update();
-                drawTime = Environment.TickCount - startTime;
+                drawTime = Environment.TickCount - frameStartTime;
             }
         }
 

@@ -10,6 +10,6 @@ namespace IO
     {
         event Func<InputCommand, int> OnInput;
 
-        void RegisterInput(InputCommand cmd, int flags);
+        void RegisterInput(InputCommand cmd, int p);
     }
 }

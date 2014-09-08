@@ -1,11 +1,11 @@
-﻿using Engine.BuffSystem;
+﻿using Engine.Systems;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Engine.GameObjects
+namespace Engine.Objects
 {
     [ProtoContract]
      public class Hero : Entity
