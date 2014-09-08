@@ -52,11 +52,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\DamageDefense.cs">
+    <Compile Include="UI\AbstractHeroPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\DamageDefense.Designer.cs">
-      <DependentUpon>DamageDefense.cs</DependentUpon>
+    <Compile Include="UI\DmgDefPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\DmgDefPanel.Designer.cs">
+      <DependentUpon>DmgDefPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\IngameHeroPanel.cs">
       <SubType>UserControl</SubType>
@@ -88,8 +91,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\DamageDefense.resx">
-      <DependentUpon>DamageDefense.cs</DependentUpon>
+    <EmbeddedResource Include="UI\DmgDefPanel.resx">
+      <DependentUpon>DmgDefPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\IngameHeroPanel.resx">
       <DependentUpon>IngameHeroPanel.cs</DependentUpon>
@@ -114,6 +117,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.csproj">
+      <Project>{0b2e9f70-7046-470a-8e5d-ebd47f030ddc}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IO\Output.csproj">
       <Project>{dc89987d-5817-4f1d-95ca-80c024c8d6bb}</Project>
       <Name>Output</Name>
