@@ -76,6 +76,12 @@
     <Compile Include="UI\IngameHeroPanel.Designer.cs">
       <DependentUpon>IngameHeroPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SpellBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SpellBar.Designer.cs">
+      <DependentUpon>SpellBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SpellButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\LifeManaPanel.resx">
       <DependentUpon>LifeManaPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SpellBar.resx">
+      <DependentUpon>SpellBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SpellButton.resx">
       <DependentUpon>SpellButton.cs</DependentUpon>
