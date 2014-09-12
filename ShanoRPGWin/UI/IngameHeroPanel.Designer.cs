@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.lblName = new System.Windows.Forms.Label();
+            this.spellBar1 = new ShanoRPGWin.UI.SpellBar();
             this.attributesPanel1 = new ShanoRPGWin.UI.AttributesPanel();
             this.expPanel1 = new ShanoRPGWin.UI.ExpPanel();
             this.dmgdefpanel = new ShanoRPGWin.UI.DmgDefPanel();
             this.LifeManaPanel = new ShanoRPGWin.UI.LifeManaPanel();
-            this.spellBar1 = new ShanoRPGWin.UI.SpellBar();
             this.SuspendLayout();
             // 
             // lblName
@@ -46,6 +46,14 @@
             this.lblName.Size = new System.Drawing.Size(103, 20);
             this.lblName.TabIndex = 5;
             this.lblName.Text = "PESHO";
+            // 
+            // spellBar1
+            // 
+            this.spellBar1.Location = new System.Drawing.Point(0, 3);
+            this.spellBar1.Name = "spellBar1";
+            this.spellBar1.NSpells = 6;
+            this.spellBar1.Size = new System.Drawing.Size(374, 42);
+            this.spellBar1.TabIndex = 6;
             // 
             // attributesPanel1
             // 
@@ -80,14 +88,6 @@
             this.LifeManaPanel.Name = "LifeManaPanel";
             this.LifeManaPanel.Size = new System.Drawing.Size(108, 60);
             this.LifeManaPanel.TabIndex = 1;
-            // 
-            // spellBar1
-            // 
-            this.spellBar1.Location = new System.Drawing.Point(0, 3);
-            this.spellBar1.Name = "spellBar1";
-            this.spellBar1.NSpells = 6;
-            this.spellBar1.Size = new System.Drawing.Size(374, 42);
-            this.spellBar1.TabIndex = 6;
             // 
             // IngameHeroPanel
             // 

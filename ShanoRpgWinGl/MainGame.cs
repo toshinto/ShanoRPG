@@ -173,7 +173,7 @@ namespace ShanoRpgWinGl
             var w = (int)(gameWidth * spw / sgw);
             var h = (int)(gameWidth * spw / sgw);
 
-            spriteBatch.Draw(tex, new Rectangle(x, y, w, h), Color.Red);
+            spriteBatch.Draw(tex, new Rectangle(x, y, w, h), Color.White);
         }
     }
 }
