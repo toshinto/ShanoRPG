@@ -1,6 +1,6 @@
 ﻿namespace ShanoRPGWin.UI
 {
-    partial class ExpPanel
+    partial class SpellBar
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,30 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ExpBar = new System.Windows.Forms.ProgressBar();
+            this.SpellPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
-            // ExpBar
+            // SpellPanel
             // 
-            this.ExpBar.Location = new System.Drawing.Point(0, 3);
-            this.ExpBar.Name = "ExpBar";
-            this.ExpBar.Size = new System.Drawing.Size(280, 23);
-            this.ExpBar.TabIndex = 0;
+            this.SpellPanel.ColumnCount = 2;
+            this.SpellPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.SpellPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.SpellPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SpellPanel.Location = new System.Drawing.Point(0, 0);
+            this.SpellPanel.Name = "SpellPanel";
+            this.SpellPanel.RowCount = 1;
+            this.SpellPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.SpellPanel.Size = new System.Drawing.Size(811, 44);
+            this.SpellPanel.TabIndex = 0;
             // 
-            // ExpPanel
+            // SpellBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.ExpBar);
-            this.Name = "ExpPanel";
-            this.Size = new System.Drawing.Size(283, 27);
+            this.Controls.Add(this.SpellPanel);
+            this.Name = "SpellBar";
+            this.Size = new System.Drawing.Size(811, 44);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        internal System.Windows.Forms.ProgressBar ExpBar;
-
+        private System.Windows.Forms.TableLayoutPanel SpellPanel;
     }
 }

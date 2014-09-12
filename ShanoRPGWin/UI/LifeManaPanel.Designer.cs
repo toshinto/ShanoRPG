@@ -93,9 +93,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblManaNum;
-        private System.Windows.Forms.Label lblLifeNum;
         private System.Windows.Forms.Label lblMana;
         private System.Windows.Forms.Label lblLife;
+        internal System.Windows.Forms.Label lblManaNum;
+        internal System.Windows.Forms.Label lblLifeNum;
     }
 }
