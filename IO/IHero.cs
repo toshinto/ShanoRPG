@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Engine.Maps
+namespace Output
 {
-    public enum MapTile
+    public interface IHero : IEntity
     {
-        Dirt, Grass, Stone, Water
     }
 }

@@ -21,5 +21,10 @@ namespace ShanoRPGWin
         {
 
         }
+
+        private void heroListPanel1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

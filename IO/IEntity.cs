@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Engine.Objects
+namespace Output
 {
-    class KeyboardState
+    public interface IEntity
     {
+        double X { get; }
+        double Y { get; }
     }
 }

@@ -9,7 +9,7 @@ namespace Engine.Objects
     [ProtoContract]
     public class Creature : Entity
     {
-        public Creature(string name,int level)
+        public Creature(string name, int level)
             : base(name)
         {
             this._level = level;
@@ -21,11 +21,16 @@ namespace Engine.Objects
             BaseDodge = 10;
         }
 
-        [ProtoMember(200)]
+        [ProtoMember(1)]
         private int _level { get; set; }
         public override int Level
         {
             get { return _level; }
+        }
+
+        public override void UpdateMovement(int msElapsed)
+        {
+            throw new NotImplementedException();
         }
      }    
 } 

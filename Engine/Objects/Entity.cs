@@ -1,4 +1,6 @@
 ﻿using Engine.Systems;
+using Input;
+using Output;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,11 @@ using System.Text;
 namespace Engine.Objects
 {
     [ProtoContract]
-    [ProtoInclude(10, typeof(Hero))]
-    [ProtoInclude(11, typeof(Creature))]
-    public abstract class Entity
+    [ProtoInclude(1, typeof(Hero))]
+    [ProtoInclude(2, typeof(Creature))]
+    public abstract class Entity : IEntity
     {
-        [ProtoMember(0)]
+        [ProtoMember(3)]
         public readonly string Name = "Pesho";
         public abstract int Level { get; }
 
@@ -38,34 +40,34 @@ namespace Engine.Objects
         public List<Buff> Buffs = new List<Buff>();
 
 
-        [ProtoMember(1)]
+        [ProtoMember(4)]
         public double CurrentLife;
 
-        [ProtoMember(2)]
+        [ProtoMember(5)]
         public double CurrentMana;
 
-        [ProtoMember(3)]
+        [ProtoMember(6)]
         public double BaseLife;
 
-        [ProtoMember(4)]
+        [ProtoMember(7)]
         public double BaseMana;
 
-        [ProtoMember(5)]
+        [ProtoMember(8)]
         public double BaseDodge;
 
-        [ProtoMember(6)]
+        [ProtoMember(9)]
         public double BaseDefense;
 
-        [ProtoMember(7)]
+        [ProtoMember(10)]
         public double BaseMoveSpeed;
 
-        [ProtoMember(8)]
+        [ProtoMember(11)]
         public double BaseMinDamage;
 
-        [ProtoMember(9)]
+        [ProtoMember(12)]
         public double BaseMaxDamage;
 
-        [ProtoMember(10)]
+        [ProtoMember(13)]
         public double BaseAttacksPerSecond;
 
         protected Entity()
@@ -108,6 +110,8 @@ namespace Engine.Objects
            }
 
         }
+
+        public abstract void UpdateMovement(int msElapsed);
     }
      
 }

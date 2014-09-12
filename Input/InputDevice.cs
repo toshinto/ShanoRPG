@@ -8,8 +8,8 @@ namespace Input
 {
     public interface InputDevice
     {
-        event Func<InputCommand, int> OnInput;
+        event Action<int> OnSpecialAction;
 
-        void RegisterInput(InputCommand cmd, int p);
+        MovementState State { get; }
     }
 }

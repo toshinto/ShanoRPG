@@ -1,5 +1,4 @@
-﻿using Engine.Objects;
-using Engine.Maps;
+﻿using Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +9,15 @@ namespace Output
 {
     public interface OutputDevice
     {
-        Entity GetEntities(Hero h);
+        /// <summary>
+        /// Gets all entities in range of the given hero. 
+        /// </summary>
+        IEnumerable<IEntity> GetEntities(IHero h);
 
 
-        MapTile[,] GetNearbyTiles(Hero h);
+        MapTile[,] GetNearbyTiles(IHero h);
+
+        void AddInputDevice(InputDevice d);
 
     }
 }

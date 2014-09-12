@@ -31,15 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="protobuf-linq">
-      <HintPath>..\packages\protobuf-linq.0.3.0\lib\net40\protobuf-linq.dll</HintPath>
+    <Reference Include="LibNoise">
+      <HintPath>..\packages\LibNoise.0.2\lib\NET40\LibNoise.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,27 +49,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEntity.cs" />
+    <Compile Include="Maps\Map.cs" />
     <Compile Include="Objects\Buff.cs" />
-    <Compile Include="Objects\KeyboardState.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Systems\Ability.cs" />
     <Compile Include="Systems\NPCCombat.cs" />
-    <Compile Include="Maps\Map.cs" />
     <Compile Include="ShanoRpg.cs" />
     <Compile Include="Objects\Creature.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\Hero.cs" />
     <Compile Include="Objects\ObjectConstants.cs" />
-    <Compile Include="Maps\MapTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Input\Input.csproj">
       <Project>{372de182-e34f-4f4d-902d-5e14ce65278a}</Project>
       <Name>Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IO\Output.csproj">
+      <Project>{dc89987d-5817-4f1d-95ca-80c024c8d6bb}</Project>
+      <Name>Output</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

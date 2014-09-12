@@ -1,48 +1,102 @@
-﻿using System;
+﻿using LibNoise;
+using LibNoise.Filter;
+using LibNoise.Modifier;
+using LibNoise.Primitive;
+using Output;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Engine.Maps
 {
     public class Map
     {
-        public readonly int Width, Height;
+        public readonly int Seed;
 
-        public readonly MapTile[,] Tiles;
-
-        public Map(string path)
+        public Map(int seed)
         {
-            if (!File.Exists(path))
-                throw new Exception("Toq fail go nqma e");
+            this.Seed = seed;
+        }
 
-            Bitmap mapFile = (Bitmap)Image.FromFile(path);
+        const float scale = 100f;
 
-            this.Width = mapFile.Width;
-            this.Height = mapFile.Height;
+        public void GetMap(int x, int y, int w, int h, ref MapTile[,] outMap)
+        {
 
-            this.Tiles = new MapTile[Width, Height];
+            //terrain type 1 - flat
+            PrimitiveModule flatPrimitive = new SimplexPerlin(this.Seed, NoiseQuality.Standard);
+
+            var flatBase = new Billow()
+            {
+                Primitive3D = (IModule3D)flatPrimitive,
+                Frequency = 1,
+            };
 
 
-            for(int ix = 0; ix < Width; ix++)
-                for(int iy = 0; iy < Height; iy++)
+            var flatTerrain = new ScaleBias(flatBase, 0.2f, -0.15f);
+
+
+            //terrain type 2 - mountains
+            var mountainTerrain = new RidgedMultiFractal()
+            {
+                Frequency = flatBase.Frequency / 2,
+                Primitive3D = (IModule3D)flatPrimitive,
+            };
+
+            
+
+            //mixer for flat/mountain terrains
+            var mountainMixerBase = new Billow()
+            {
+                Frequency = mountainTerrain.Frequency / 2,
+                Primitive3D = (IModule3D)flatPrimitive,
+            };
+
+            var mountainMixer = new LibNoise.Modifier.ScaleBias(mountainMixerBase, 1f, -0.95f);
+
+            //mix flat/mountains here
+            var mixedTerrain = new Select(mountainMixer, mountainTerrain, flatTerrain, 0, 1, 0.5f);
+
+
+            //deep water (inverted mountains)
+            IModule deepWater = new Invert(mountainTerrain);
+            deepWater = new ScaleBias(deepWater)
+            {
+                Scale = 0.2f,
+                Bias = -1
+            };
+
+            //water mixer
+            IModule waterMixer = new Billow()
+            {
+                Frequency = 0.1f,
+                Lacunarity = 6,
+                Primitive3D = (IModule3D)flatPrimitive,
+            };
+            waterMixer = new ScaleBias(waterMixer, 1, -0.95f);
+
+            //mix water/terrain here
+            var finalTerrainA = new Select(waterMixer, mixedTerrain, deepWater, -1, 1, 0.3f);
+
+            //clamp them vals (why?)
+            var finalTerrainB = new Clamp(finalTerrainA, -1, 1);
+
+            var finalTerrain = new ScaleBias(finalTerrainB, 0.5f, 0.5f);
+
+            for(int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
                 {
-                    var tileColor = mapFile.GetPixel(ix, iy);
+                    var px = (float)(x + i) / scale;
+                    var py = (float)(y + j) / scale;
+                    var val = ((IModule3D)mixedTerrain).GetValue(px, py, 0);
 
-                    if (tileColor == Color.Green)
-                        Tiles[ix, iy] = MapTile.Grass;
-                    else if (tileColor == Color.Brown)
-                        Tiles[ix, iy] = MapTile.Dirt;
-                    else if (tileColor == Color.Blue)
-                        Tiles[ix, iy] = MapTile.Water;
-                    else if (tileColor == Color.Gray)
-                        Tiles[ix, iy] = MapTile.Stone;
-                    else
-                        throw new Exception("Unrecognized color: " + tileColor.ToString());
+                    outMap[i, j] = val < 0.0f ? MapTile.Dirt : MapTile.Grass;
                 }
-                
+            }
         }
     }
 }
