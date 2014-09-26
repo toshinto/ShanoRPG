@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Objects;
 
 namespace Engine.Maps
 {
@@ -16,16 +17,53 @@ namespace Engine.Maps
     {
         public readonly int Seed;
 
+        private IModule terrainModule;
+
+
+        /// <summary>
+        /// A list of all the (spawned) monsters in the game. 
+        /// </summary>
+        List<Entity> entities = new List<Entity>();
+
+        public IEnumerable<Entity> Entities
+        {
+            get { return entities; }
+        }
+
         public Map(int seed)
         {
             this.Seed = seed;
+
+            initTerrain();
         }
 
-        const float scale = 100f;
+        internal void AddEntity(Entity e)
+        {
+            this.entities.Add(e);
+        }
+
 
         public void GetMap(int x, int y, int w, int h, ref MapTile[,] outMap)
         {
+            for(int i = 0; i < w; i++)
+                for (int j = 0; j < h; j++)
+                    outMap[i, j] = GetTile(x + i, y + j);
+        }
 
+        public MapTile GetTile(int x, int y)
+        {
+            const float scale = 100f;
+
+            var px = (float)(x) / scale;
+            var py = (float)(y) / scale;
+            var val = ((IModule3D)terrainModule).GetValue(px, py, 0);
+
+            return val < 0.0f ? MapTile.Dirt : MapTile.Grass;
+        }
+
+
+        private void initTerrain()
+        {
             //terrain type 1 - flat
             PrimitiveModule flatPrimitive = new SimplexPerlin(this.Seed, NoiseQuality.Standard);
 
@@ -46,7 +84,7 @@ namespace Engine.Maps
                 Primitive3D = (IModule3D)flatPrimitive,
             };
 
-            
+
 
             //mixer for flat/mountain terrains
             var mountainMixerBase = new Billow()
@@ -86,17 +124,7 @@ namespace Engine.Maps
 
             var finalTerrain = new ScaleBias(finalTerrainB, 0.5f, 0.5f);
 
-            for(int i = 0; i < w; i++)
-            {
-                for (int j = 0; j < h; j++)
-                {
-                    var px = (float)(x + i) / scale;
-                    var py = (float)(y + j) / scale;
-                    var val = ((IModule3D)mixedTerrain).GetValue(px, py, 0);
-
-                    outMap[i, j] = val < 0.0f ? MapTile.Dirt : MapTile.Grass;
-                }
-            }
+            this.terrainModule = mixedTerrain;
         }
     }
 }

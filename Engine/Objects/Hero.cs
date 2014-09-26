@@ -16,6 +16,24 @@ namespace Engine.Objects
         private const int XpPerLevel = 100;
 
         private int _experience;
+        private int _level;
+
+        /// <summary>
+        /// The experience needed to reach the next level. 
+        /// </summary>
+        /// <returns></returns>
+        public int ExperienceNeeded
+        {
+            get
+            {
+                return XpPerLevel * _level;
+            }
+        }
+
+        public override int Level
+        {
+            get { return _level; }
+        }
 
         /// <summary>
         /// The current experience of this hero.
@@ -37,19 +55,6 @@ namespace Engine.Objects
             }
         }
 
-        public int ExperienceNeeded
-        {
-            get
-            {
-                return XpPerLevel * _level;
-            }
-        }
-
-        private int _level;
-        public override int Level
-        {
-            get { return _level; }
-        }
         [ProtoMember(2)]
         public double BaseStrength;
         [ProtoMember(3)]
@@ -59,11 +64,17 @@ namespace Engine.Objects
         [ProtoMember(5)]
         public double BaseAgility;
 
-        public double CurrentStrength;
-        public double CurrentVitality;
-        public double CurrentIntellect;
-        public double CurrentAgility;
+        private Dictionary<string, Ability> abilities = new Dictionary<string, Ability>();
 
+        public double CurrentStrength { get; protected set; }
+        public double CurrentVitality { get; protected set; }
+        public double CurrentIntellect { get; protected set; }
+        public double CurrentAgility { get; protected set; }
+
+        public IEnumerable<IAbility> Abilities
+        {
+            get { return abilities.Values; }
+        }
 
         public volatile MovementState MovementState;
 
@@ -73,31 +84,36 @@ namespace Engine.Objects
             
         }
 
+        
+
+        public void AddAbility(Ability a)
+        {
+            abilities.Add(a.Name, a);
+        }
+
         public Hero(string name)
             : base(name)
         {
-            this.BaseMoveSpeed = 3;
+            this.BaseMoveSpeed = 5;
+            CurrentLife = BaseLife = 100;
         }
 
-        public override void UpdateBuffs(double secondsElapsed)
+        protected override void UpdateBuffs(double secondsElapsed)
         {
             //Vika Entity.UpdateBuffs,koeto update-va life,mana,ala bala.
             base.UpdateBuffs(secondsElapsed);
-            CurrentStrength = BaseStrength;
-            CurrentAgility = BaseAgility;
-            CurrentIntellect = BaseIntellect;
-            CurrentVitality = BaseVitality;
-            for (int i = 0; i < Buffs.Count; i++)
-            {
-                Buff b = Buffs[i];
-                CurrentStrength += b.Strength;
-                CurrentVitality += b.Vitality;
-                CurrentIntellect += b.Intellect;
-                CurrentAgility += b.Agility;
-            }
+
+            CurrentStrength = BaseStrength + Buffs.Sum(b => b.Strength);
+            CurrentVitality = BaseVitality + Buffs.Sum(b => b.Vitality);
+            CurrentIntellect = BaseIntellect + Buffs.Sum(b => b.Intellect);
+            CurrentAgility = BaseAgility + Buffs.Sum(b => b.Agility);
         }
 
-        public override void UpdateMovement(int msElapsed)
+        /// <summary>
+        /// Uses this.MovementState to update the position of the hero. 
+        /// </summary>
+        /// <param name="msElapsed"></param>
+        protected override void UpdateMovement(int msElapsed)
         {
             var dx = MovementState.XDirection;
             var dy = MovementState.YDirection;
@@ -108,8 +124,7 @@ namespace Engine.Objects
             {
                 if (dx * dy != 0)
                     dist = dist / Math.Sqrt(2);
-                this.X += dx * dist;
-                this.Y += dy * dist;
+                this.Location += new Vector(dx, dy) * dist;
             }
         }
 
@@ -117,7 +132,6 @@ namespace Engine.Objects
         {
             using(var fs = File.Create(fileName))
             {
-
                 Serializer.Serialize(fs, this);
             }
         }
@@ -131,6 +145,25 @@ namespace Engine.Objects
             }
         }
 
+        public virtual void OnSpecialAction(string actionId)
+        {
+            Ability actionAbility;
+            abilities.TryGetValue(actionId, out actionAbility);
+
+            if (actionAbility.CurrentCooldown > 0)
+                return;
+
+            actionAbility.CurrentCooldown = actionAbility.Cooldown;
+            actionAbility.Cast(null);
+        }
+
+        public override void Update(int msElapsed)
+        {
+            base.Update(msElapsed);
+
+            foreach (var a in abilities.Values)
+                a.Update(msElapsed);
+        }
     }
 
 }

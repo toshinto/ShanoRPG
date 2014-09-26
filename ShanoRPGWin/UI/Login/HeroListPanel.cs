@@ -58,11 +58,20 @@ namespace ShanoRPGWin.UI
 
             this.pHeroes.Controls.Add(pan);
             pan.MouseClick += pan_MouseClick;
+            pan.MouseDoubleClick += pan_MouseDoubleClick;
 
             foreach (var lastRow in pHeroes.RowStyles.Cast<RowStyle>())
             {
                 lastRow.Height = 64;
                 lastRow.SizeType = SizeType.Absolute;
+            }
+        }
+
+        void pan_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if(SelectedHero != null)
+            {
+                btnPlay_Click(null, null);
             }
         }
 

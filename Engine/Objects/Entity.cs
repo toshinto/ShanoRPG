@@ -1,12 +1,12 @@
 ﻿using Engine.Systems;
 using Input;
-using Output;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using Output;
 
 namespace Engine.Objects
 {
@@ -34,17 +34,26 @@ namespace Engine.Objects
         public double CurrentMaxDamage { get; protected set; }
         public double CurrentMoveSpeed { get; protected set; }
 
-        public double X { get; protected set; }
-        public double Y { get; protected set; }
+        public Vector Location { get; set; }
 
         public List<Buff> Buffs = new List<Buff>();
 
 
         [ProtoMember(4)]
-        public double CurrentLife;
+        public double CurrentLife { get; set; }
+
+        public string Icon { get; set; }
 
         [ProtoMember(5)]
-        public double CurrentMana;
+        public double CurrentMana { get; set; }
+
+        IVector IEntity.Location
+        {
+            get
+            {
+                return Location;
+            }
+        }
 
         [ProtoMember(6)]
         public double BaseLife;
@@ -56,7 +65,7 @@ namespace Engine.Objects
         public double BaseDodge;
 
         [ProtoMember(9)]
-        public double BaseDefense;
+        public double BaseDefense; 
 
         [ProtoMember(10)]
         public double BaseMoveSpeed;
@@ -70,11 +79,14 @@ namespace Engine.Objects
         [ProtoMember(13)]
         public double BaseAttacksPerSecond;
 
+        //[ProtoMember(14)]
+        private List<string> abilityNames = new List<string>();
+
         protected Entity()
         {
 
         }
-
+        
         public Entity(string name)
         {
             this.Name = name;
@@ -84,34 +96,36 @@ namespace Engine.Objects
         /// Updates the entity's buffs
         /// </summary>
         /// <param name="secondsElapsed">the time elapsed since the last update, in seconds</param>
-        public virtual void UpdateBuffs(double secondsElapsed)
+        protected virtual void UpdateBuffs(double msElapsed)
         {
-            //Here we reset the stats
-            CurrentDefense = BaseDefense;
-            CurrentDodge = BaseDodge;
-            CurrentMaxLife = BaseLife;
-            CurrentMaxMana = BaseMana;
-            CurrentMinDamage = BaseMinDamage;
-            CurrentMaxDamage = BaseMaxDamage; 
-            CurrentMoveSpeed = BaseMoveSpeed;
-            CurrentAttacksPerSecond = BaseAttacksPerSecond;
+            //Update durations, remove stale buffs
+            foreach (var b in Buffs)
+                b.DurationLeft -= msElapsed;
+            Buffs.RemoveAll((b) => b.DurationLeft <= 0);
 
-            // Here we update the active buffs
-           for(int i = 0;i<Buffs.Count;i++)
-           {
-               Buff b = Buffs[i];
-               CurrentDefense += b.Defense;
-               CurrentMaxLife += b.Life;
-               CurrentMaxMana += b.Mana;
-               CurrentMinDamage += b.MinDamage;
-               CurrentMaxDamage += b.MaxDamage;
-               CurrentMoveSpeed += BaseMoveSpeed * b.MoveSpeedPerc / 100;
-               CurrentAttacksPerSecond += BaseAttacksPerSecond * b.AttackSpeedPerc / 100;
-           }
+
+            CurrentDefense = BaseDefense + Buffs.Sum(b => b.Defense);
+            CurrentDodge = BaseDodge;
+            CurrentMaxLife = BaseLife + Buffs.Sum(b => b.Life);
+            CurrentMaxMana = BaseMana + Buffs.Sum(b => b.Mana);
+            CurrentMinDamage = BaseMinDamage + Buffs.Sum(b => b.MinDamage);
+            CurrentMaxDamage = BaseMaxDamage + Buffs.Sum(b => b.MaxDamage);
+            CurrentMoveSpeed = BaseMoveSpeed * (100 + Buffs.Sum(b => b.MoveSpeedPerc)) / 100;
+            CurrentAttacksPerSecond = BaseAttacksPerSecond * (100 + Buffs.Sum(b => b.AttackSpeedPerc)) / 100;
 
         }
 
-        public abstract void UpdateMovement(int msElapsed);
+        protected abstract void UpdateMovement(int msElapsed);
+
+        /// <summary>
+        /// Updates movement and buffs. 
+        /// </summary>
+        /// <param name="msElapsed"></param>
+        public virtual void Update(int msElapsed)
+        {
+            this.UpdateBuffs(msElapsed);
+            this.UpdateMovement(msElapsed);
+        }
     }
      
 }

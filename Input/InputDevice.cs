@@ -8,7 +8,7 @@ namespace Input
 {
     public interface InputDevice
     {
-        event Action<int> OnSpecialAction;
+        event Action<string> OnSpecialAction;
 
         MovementState State { get; }
     }

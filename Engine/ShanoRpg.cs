@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using Output;
 using Input;
+using ScriptLib;
+using Engine.Systems;
 //using Input;
 
 namespace Engine
@@ -27,39 +29,39 @@ namespace Engine
         /// </summary>
         Map WorldMap;
 
-        /// <summary>
-        /// A list of all the (spawned) monsters in the game. 
-        /// </summary>
-        List<Creature> Monsters;
 
         /// <summary>
-        /// A list of all heroes in the game. 
+        /// A list of all players currently in game. 
         /// </summary>
         List<Player> Players;
+
+
+        List<Ability> Abilities;
+
+
+        Scenario scenario;
 
         /// <summary>
         /// Gets all entities currently in the game. 
         /// </summary>
         public IEnumerable<Entity> Entities
         {
-            get
-            {
-                foreach (var m in Monsters)
-                    yield return m;
-                foreach (var p in Players)
-                    yield return p.Hero;
-            }
+            get { return WorldMap.Entities; }
         }
 
         public ShanoRpg(int mapSeed, Player localPlayer)
         {
+            if (!loadScenario("Abilities"))
+            {
+                throw new Exception("Unable to compile some of the abilities!");
+            }
             this.WorldMap = new Map(mapSeed);
-
-            this.Monsters = new List<Creature>();
 
             this.Players = new List<Player>();
 
             this.AddPlayer(localPlayer);
+
+
 
             //start the update thread
             this.MainThread = new Thread(updateLoop)
@@ -67,11 +69,43 @@ namespace Engine
                 IsBackground = true
             };
             MainThread.Start();
+
+            var c = new Creature("Goshko", 1)
+            {
+                Location = new Vector(5, 5),
+            };
+
+            AddCreature(c);
+        }
+
+        public bool loadScenario(string scName)
+        {
+            scenario = new Scenario(scName);
+
+            return scenario.TryCompile();
+        }
+
+        public void AddAbility(Hero h, string ability)
+        {
+            var a = scenario.CreateAbility(ability);
+
+            a.Hero = h;
+            a.Game = this;
+
+            h.AddAbility(a);
         }
 
         public void AddPlayer(Player p)
         {
             this.Players.Add(p);
+            this.WorldMap.AddEntity(p.Hero);
+
+            AddAbility(p.Hero, "Attack");
+        }
+
+        public void AddCreature(Creature c)
+        {
+            this.WorldMap.AddEntity(c);
         }
 
         void LocalInput_OnAbilityCast(int obj)
@@ -104,15 +138,19 @@ namespace Engine
         {
 
             foreach (var e in Entities)
-                e.UpdateBuffs(msElapsed);
+                e.Update(msElapsed);
 
-            foreach (var p in Players)
-            {
-                p.Hero.UpdateMovement(msElapsed);
-            }
+
 
             //update local hero state
             //foreach()
+        }
+
+        public IEnumerable<Entity> GetUnitsInRange(Entity fromUnit, float range)
+        {
+            var rsq = range * range;
+            return Entities
+                .Where(e => e.Location.DistanceToSquared(fromUnit.Location) <= rsq);
         }
 
         public IEnumerable<IEntity> GetEntities(IHero h)
@@ -120,20 +158,23 @@ namespace Engine
             return Entities;
         }
 
-        public MapTile[,] GetNearbyTiles(IHero h)
+        public void GetNearbyTiles(IHero h, ref MapTile[,] tileMap, out double heroX, out double heroY)
         {
-            const int xRange = 7;
+            heroX = h.Location.X;
+            heroY = h.Location.Y;
+
+            const int xRange = 8;
             const int yRange = 5;
             const int xSize = xRange * 2 + 1;
             const int ySize = yRange * 2 + 1;
-            var x = (int)(h.X - xRange);
-            var y = (int)(h.Y - yRange);
 
+            var x = (int)Math.Floor(heroX - xRange);
+            var y = (int)Math.Floor(heroY - yRange);
 
-            var tileMap = new MapTile[xSize, ySize];
+            if (tileMap.GetLength(0) < xSize ||tileMap.GetLength(1) < ySize)
+                throw new ArgumentOutOfRangeException("Tile array should be larger than the given. ");
+
             WorldMap.GetMap(x, y, xSize, ySize, ref tileMap);
-
-            return tileMap;
         }
 
 

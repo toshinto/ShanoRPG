@@ -22,14 +22,15 @@ namespace ShanoRpgWinGl
 
                 //create the game engine
                 var theGame = new ShanoRpg(mapSeed, new Player((Hero)localHero, (InputDevice)g.LocalInput));
-                
+
                 //link them
                 g.GameDevice = theGame;
 
                 //start
-                g.Run();
+               g.Run();
             });
             t.Start();
         }
     }
 }
+ 

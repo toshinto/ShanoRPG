@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ShanoRpgWinGl.Constants" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.Ext" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.LocalInput" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAASAAAAAAAAAAAAABABAgAAAA=</HashCode>
+      <FileName>LocalInput.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShanoRpgWinGl.MainGame">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCEEAAAAAAAxABCRAAgAQAAgAAAAgAAAAAAAAAAAQ=</HashCode>
+      <FileName>MainGame.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="GameDevice" />
+      <Field Name="localHero" />
+      <Field Name="LocalInput" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ShanoRpgWinGl.ShanoRPGWinGl">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.AnimatedSprite" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAgAAAAkAAAAgAAAAAAAAAAAAAAAIAAAiAAAI=</HashCode>
+      <FileName>Sprites\AnimatedSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.SimpleSprite" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAACAAAA=</HashCode>
+      <FileName>Sprites\SimpleSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.Sprite" Collapsed="true">
+    <Position X="2" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Sprites\Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.TextureCache">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBACQAEAZAAAAAAAAABBAAAAAAAABAAAAIAAIACAAIQ=</HashCode>
+      <FileName>TextureCache.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainFont" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ShanoRpgWinGl.TextureFont" Collapsed="true">
+    <Position X="3.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAJAIDAAAAAIAAgAAAAAAAAAAABIAAAAAAAA=</HashCode>
+      <FileName>TextureFont.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.UI.HeroUI" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQQAAAAAAgAAAgBAAAAAAQAAAAAAAAAAQAAAAIAAAAA=</HashCode>
+      <FileName>UI\HeroUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShanoRpgWinGl.ScreenInfo" Collapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIACAAEAAACAAAABAAAAAAAAAA=</HashCode>
+      <FileName>ScreenInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Output.OutputDevice" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Output.IHero" Collapsed="true">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="Output.MapTile" Collapsed="true">
+    <Position X="12.5" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

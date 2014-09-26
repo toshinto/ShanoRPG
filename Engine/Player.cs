@@ -17,7 +17,12 @@ namespace Engine
         {
             this.Hero = hero;
             this.InputDevice = inputDevice;
+
+            //link movement
             this.Hero.MovementState = InputDevice.State;
+
+            //link events
+            inputDevice.OnSpecialAction += Hero.OnSpecialAction;
         }
     }
 }

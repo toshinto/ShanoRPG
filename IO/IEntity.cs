@@ -7,7 +7,17 @@ namespace Output
 {
     public interface IEntity
     {
-        double X { get; }
-        double Y { get; }
+        IVector Location { get; }
+
+        double CurrentLife { get; }
+        double CurrentMaxLife { get; }
+
+        double CurrentMana { get; }
+        double CurrentMaxMana { get; }
+
+        double CurrentMoveSpeed { get; }
+        double CurrentDefense { get; }
+        double CurrentMinDamage { get; }
+        double CurrentMaxDamage { get; }
     }
 }

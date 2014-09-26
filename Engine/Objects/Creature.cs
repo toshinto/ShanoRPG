@@ -28,9 +28,9 @@ namespace Engine.Objects
             get { return _level; }
         }
 
-        public override void UpdateMovement(int msElapsed)
+        protected override void UpdateMovement(int msElapsed)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
      }    
 } 

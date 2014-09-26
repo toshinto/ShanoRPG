@@ -7,5 +7,11 @@ namespace Output
 {
     public interface IHero : IEntity
     {
+        double CurrentStrength { get; }
+        double CurrentAgility { get; }
+        double CurrentVitality { get; }
+        double CurrentIntellect { get; }
+
+        IEnumerable<IAbility> Abilities { get; }
     }
 }

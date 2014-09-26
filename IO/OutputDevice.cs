@@ -15,7 +15,7 @@ namespace Output
         IEnumerable<IEntity> GetEntities(IHero h);
 
 
-        MapTile[,] GetNearbyTiles(IHero h);
+        void GetNearbyTiles(IHero h, ref MapTile[,] tiles, out double x, out double y);
 
         void AddInputDevice(InputDevice d);
 
