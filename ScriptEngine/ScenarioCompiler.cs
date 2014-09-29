@@ -37,7 +37,7 @@ namespace ScriptLib
                     references: new[] {
                         new MetadataFileReference(getAssemblyDir("mscorlib.dll")),
                         new MetadataFileReference(getLocalDir("Engine.dll")),
-                        new MetadataFileReference(getLocalDir("Output.dll")),
+                        new MetadataFileReference(getLocalDir("IO.dll")),
                     },
 
                     options: new CompilationOptions(OutputKind.DynamicallyLinkedLibrary)

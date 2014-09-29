@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Output;
+using IO;
 
 namespace ShanoRpgWinGl.UI
 {
@@ -17,9 +18,9 @@ namespace ShanoRpgWinGl.UI
 
         readonly IHero hero;
 
-        readonly LocalInput input;
+        readonly IO.IServer input;
 
-        public MainForm(IHero hero, LocalInput input)
+        public MainForm(IHero hero, IO.IServer input)
         {
             this.Size = new Vector2(2f, 2f);
             this.AbsolutePosition = new Vector2(-1, -1);
@@ -55,7 +56,10 @@ namespace ShanoRpgWinGl.UI
         private void mouseDown(Vector2 p)
         {
             if (mouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
-                input.RegisterAction(mainAbilityButton.Ability.Name);
+            {
+                var abilityId = mainAbilityButton.Ability.Name.GetBytes();
+                input.RegisterAction(Command.Ability, abilityId);
+            }
         }
     }
 }

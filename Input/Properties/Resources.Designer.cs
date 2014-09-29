@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Input.Properties {
+namespace IO.Properties {
     using System;
     
     

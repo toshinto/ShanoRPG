@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Engine.Objects
 {
+    /// <summary>
+    /// Represents any in-game effect which has a temporary effect on a unit's statistics. 
+    /// </summary>
     public class Buff
     {
         public readonly int MoveSpeedPerc,

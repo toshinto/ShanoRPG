@@ -13,7 +13,7 @@ namespace Engine.Systems
     {
         readonly Dictionary<string, Ability> abilityPrototypes = new Dictionary<string, Ability>();
 
-        readonly Dictionary<string, Creature> creaturePrototypes = new Dictionary<string, Creature>();
+        readonly Dictionary<string, ShanoMonster> creaturePrototypes = new Dictionary<string, ShanoMonster>();
 
 
         public Scenario(string fileDir)
@@ -44,8 +44,13 @@ namespace Engine.Systems
         {
             var assembly = Assembly.LoadFile(getLocalDir(OutputFile));
 
-            //get all abilities
-            createPrototypes(assembly, abilityPrototypes);
+            //abils
+            loadAbilities(assembly);
+        }
+
+        private void loadAbilities(Assembly a)
+        {
+            createPrototypes(a, abilityPrototypes);
         }
 
         private void createPrototypes<T>(Assembly a, Dictionary<string, T> protoDict)

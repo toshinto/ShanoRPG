@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Input.Properties {
+namespace IO.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

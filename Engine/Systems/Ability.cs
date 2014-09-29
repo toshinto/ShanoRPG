@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Engine.Objects;
-using Output;
+using IO;
 
 namespace Engine.Systems
 {
@@ -50,7 +50,7 @@ namespace Engine.Systems
                     OnCast(Vector.Zero);
                     break;
                 case SpellType.UnitTarget:
-                    OnCast((Entity)target);
+                    OnCast((Unit)target);
                     break;
             }
         }
@@ -72,7 +72,7 @@ namespace Engine.Systems
 
         }
 
-        public virtual void OnCast(Entity target)
+        public virtual void OnCast(Unit target)
         {
 
         }

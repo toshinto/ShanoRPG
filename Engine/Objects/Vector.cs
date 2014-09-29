@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Output;
+using IO;
 
 namespace Engine.Objects
 {
@@ -31,6 +31,11 @@ namespace Engine.Objects
             this.y = y;
         }
 
+        internal Vector Floor()
+        {
+            return new Vector(Math.Floor(X), Math.Floor(Y));
+        }
+
         public static Vector operator +(Vector a, Vector b)
         {
             return new Vector(a.X + b.X, a.Y + b.Y);
@@ -49,6 +54,17 @@ namespace Engine.Objects
         public static Vector operator /(Vector a, double mult)
         {
             return new Vector(a.X / mult, a.Y / mult);
+        }
+
+        /// <summary>
+        /// Performs element-wise division of a by b. 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static Vector operator /(Vector a, Vector b)
+        {
+            return new Vector(a.X / b.X, a.Y / b.Y);
         }
 
         public static bool operator ==(Vector a, Vector b)
@@ -86,6 +102,11 @@ namespace Engine.Objects
         public double DistanceTo(Vector other)
         {
             return Math.Sqrt(DistanceToSquared(other));
+        }
+
+        public bool Inside(Vector pos, Vector size)
+        {
+            return X >= pos.x && y >= pos.y && x <= pos.x + size.x && y <= pos.y + size.y;
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace ShanoRpgWinGl
 {
+    /// <summary>
+    /// Contains information about the current camera, screen and UI parameters. 
+    /// </summary>
     static class ScreenInfo
     {
         /// <summary>
@@ -46,6 +49,7 @@ namespace ShanoRpgWinGl
             var rx = ScreenSize.X / 2;
             var ry = ScreenSize.Y / 2;
             var scale = Math.Min(rx, ry);
+
             return new Point(
                 rx + (int)(p.X * scale),
                 ry + (int)(p.Y * scale));
@@ -56,6 +60,7 @@ namespace ShanoRpgWinGl
             var rx = ScreenSize.X / 2;
             var ry = ScreenSize.Y / 2;
             var scale = Math.Min(rx, ry);
+
             return new Vector2(
                 (float)(p.X - rx) / scale,
                 (float)(p.Y - ry) / scale);

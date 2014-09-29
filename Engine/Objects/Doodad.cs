@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 namespace Engine.Objects
 {
     /// <summary>
-    /// Represents an aura within a range of a given unit. 
+    /// Represents any in-game objects which are not units, such as trees, rocks, barrels, projectiles. 
     /// </summary>
-    class Aura
+    class Doodad : GameObject
     {
-        public Aura(Unit target, Buff b)
+
+
+        public Doodad(string name)
         {
 
         }

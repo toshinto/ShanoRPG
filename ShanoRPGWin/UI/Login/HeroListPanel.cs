@@ -11,7 +11,10 @@ using Engine.Objects;
 using ShanoRpgWin;
 using Engine;
 using ShanoRpgWinGl;
-using Output;
+using IO;
+using System.Threading;
+using IO;
+using Local;
 
 namespace ShanoRPGWin.UI
 {
@@ -126,13 +129,19 @@ namespace ShanoRPGWin.UI
         private void btnPlay_Click(object sender, EventArgs e)
         {
             this.ParentForm.Hide();
+            var h = SelectedHero.Hero;
 
             int mapSeed = -1;
             if(!int.TryParse(textBox1.Text, out mapSeed))
             {
                 mapSeed = rnd.Next(0, 1 << 16);
             }
-            ShanoRPGWinGl.StartLocalGame(555, SelectedHero.Hero);
+            var t = new Thread(() =>
+            {
+                LocalShano theGame = new LocalShano(mapSeed, h);
+            });
+            t.Start();
+
 
             Application.ExitThread();
         }

@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
-using Output;
-using Input;
+using IO;
+using IO;
 using System.Xml;
 using ShanoRpgWinGl.UI;
 using System.Threading;
@@ -19,17 +19,20 @@ using System.Collections.Generic;
 namespace ShanoRpgWinGl
 {
     /// <summary>
-    /// This is the main type for your game
+    /// This is the main type for our game
     /// </summary>
     public class MainGame : Game
     {
-        public OutputDevice GameDevice;
+        public IServer Server;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         MapTile[,] mapTiles = new MapTile[Constants.Game.ScreenWidth + 5, Constants.Game.ScreenHeight + 5];
 
+        /// <summary>
+        /// The main UI window. 
+        /// </summary>
         MainForm mainInterface;
 
         /// <summary>
@@ -37,9 +40,10 @@ namespace ShanoRpgWinGl
         /// </summary>
         readonly IHero localHero;
 
-        IEnumerable<IEntity> entities;
-
-        public readonly LocalInput LocalInput = new LocalInput();
+        /// <summary>
+        /// All entities in our proximity. 
+        /// </summary>
+        IEnumerable<IUnit> entities;
 
         public MainGame(IHero h)
             : base()
@@ -47,6 +51,16 @@ namespace ShanoRpgWinGl
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.localHero = h;
+        }
+
+        //hack so we can start the game without referencing monogame. duh
+        public bool Running
+        {
+            set
+            {
+                if(value)
+                    Run();
+            }
         }
 
         /// <summary>
@@ -58,7 +72,7 @@ namespace ShanoRpgWinGl
 
             base.Initialize();
 
-            mainInterface = new MainForm(localHero, LocalInput);
+            mainInterface = new MainForm(localHero, Server);
 
             ScreenInfo.CenterPoint = new Vector2((float)localHero.Location.X, (float)localHero.Location.Y);
             ScreenInfo.ScreenSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
@@ -127,7 +141,7 @@ namespace ShanoRpgWinGl
             var msElapsed = (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             //check local hero keys
-            LocalInput.UpdateKeys();
+            UpdateKeys();
 
             //update sprites
             foreach (var sprite in TextureCache.Sprites)
@@ -137,6 +151,22 @@ namespace ShanoRpgWinGl
             mainInterface.Update(msElapsed);
 
             base.Update(gameTime);
+        }
+        public void UpdateKeys()
+        {
+            //converts a bool to an int
+            Func<bool, int> b2i = (b) => (b ? 1 : 0);
+
+            //keyboard handlers
+            var kbd = Keyboard.GetState();
+
+            var dx = b2i(kbd.IsKeyDown(Keys.D)) - b2i(kbd.IsKeyDown(Keys.A));
+            var dy = b2i(kbd.IsKeyDown(Keys.S)) - b2i(kbd.IsKeyDown(Keys.W));
+            Server.MovementState = new MovementState()
+            {
+                XDirection = dx,
+                YDirection = dy
+            };
         }
 
         /// <summary>
@@ -149,9 +179,9 @@ namespace ShanoRpgWinGl
 
             //get terrain, hero info. 
             double x, y;
-            GameDevice.GetNearbyTiles(localHero, ref mapTiles, out x, out y);
+            Server.GetNearbyTiles(ref mapTiles, out x, out y);
 
-            entities = GameDevice.GetEntities(localHero)
+            entities = Server.GetUnits()
                 .Where(h => h != localHero);
 
             //update cameraInfo
@@ -159,7 +189,7 @@ namespace ShanoRpgWinGl
             ScreenInfo.ScreenSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             //cameraInfo.ScreenSize = new Point(800, 480);
 
-            if (GameDevice != null)
+            if (Server != null)
             {
                 //start drawing
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
@@ -190,13 +220,13 @@ namespace ShanoRpgWinGl
 
         private void drawHero()
         {
-            var moving = (LocalInput.State.XDirection | LocalInput.State.YDirection) != 0;
+            var moving = (Server.MovementState.XDirection | Server.MovementState.YDirection) != 0;
             TextureCache.InGameHero.Period = moving ? 100 : 1000;
             Vector2 heroSize = new Vector2(0.8f, 0.8f);
             TextureCache.InGameHero.DrawInGame(spriteBatch, ScreenInfo.CenterPoint - heroSize / 2, heroSize);
         }
 
-        private void drawEntity(IEntity u)
+        private void drawEntity(IUnit u)
         {
 
         }

@@ -1,6 +1,5 @@
 ﻿using Engine.Systems;
-using Input;
-using Output;
+using IO;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Text;
 namespace Engine.Objects
 {
     [ProtoContract]
-    public class Hero : Entity, IHero
+    public class Hero : Unit, IHero
     {
         private const int XpPerLevel = 100;
 
@@ -76,7 +75,7 @@ namespace Engine.Objects
             get { return abilities.Values; }
         }
 
-        public volatile MovementState MovementState;
+        public MovementState MovementState;
 
         public Hero()
             : base()
@@ -145,10 +144,11 @@ namespace Engine.Objects
             }
         }
 
-        public virtual void OnSpecialAction(string actionId)
+        public virtual void OnSpecialAction(Command c, byte[] p)
         {
             Ability actionAbility;
-            abilities.TryGetValue(actionId, out actionAbility);
+
+            abilities.TryGetValue(p.GetString(), out actionAbility);
 
             if (actionAbility.CurrentCooldown > 0)
                 return;

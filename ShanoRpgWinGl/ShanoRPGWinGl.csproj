@@ -47,11 +47,9 @@
     <Compile Include="Ext.cs" />
     <Compile Include="Sprites\AnimatedSprite.cs" />
     <Compile Include="Sprites\Sprite.cs" />
-    <Compile Include="LocalInput.cs" />
     <Compile Include="Sprites\SimpleSprite.cs" />
     <Compile Include="TextureCache.cs" />
     <Compile Include="MainGame.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureFont.cs" />
     <Compile Include="UI\HeroUI.cs" />
@@ -106,17 +104,9 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.csproj">
-      <Project>{0b2e9f70-7046-470a-8e5d-ebd47f030ddc}</Project>
-      <Name>Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Input\Input.csproj">
-      <Project>{372de182-e34f-4f4d-902d-5e14ce65278a}</Project>
-      <Name>Input</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IO\Output.csproj">
+    <ProjectReference Include="..\Output\IO.csproj">
       <Project>{dc89987d-5817-4f1d-95ca-80c024c8d6bb}</Project>
-      <Name>Output</Name>
+      <Name>IO</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace ShanoRpgWinGl.UI
 
         public Color ValueColor = Color.White;
 
-        public Color BackColor = Color.Gray;
+        public Color BackColor = Color.Transparent;
 
         public string Value = string.Empty;
 

@@ -1,5 +1,5 @@
 ﻿using Engine.Objects;
-using Input;
+using IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,22 +7,28 @@ using System.Text;
 
 namespace Engine
 {
+    /// <summary>
+    /// Represents a player connected to a game. 
+    /// </summary>
     public class Player
     {
-        public readonly Hero Hero;
+        public Hero Hero { get; private set; }
 
-        public readonly InputDevice InputDevice;
+        public readonly IClient InputDevice;
 
-        public Player(Hero hero, InputDevice inputDevice)
+        public Player(Hero hero, IClient inputDevice)
         {
             this.Hero = hero;
             this.InputDevice = inputDevice;
 
-            //link movement
-            this.Hero.MovementState = InputDevice.State;
 
             //link events
             inputDevice.OnSpecialAction += Hero.OnSpecialAction;
+        }
+
+        public void Update()
+        { 
+            this.Hero.MovementState = InputDevice.MovementState;
         }
     }
 }

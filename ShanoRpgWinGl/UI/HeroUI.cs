@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Output;
+using IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +83,7 @@ namespace ShanoRpgWinGl.UI
             vitality.RelativePosition = new Vector2(Anchor, intellect.Bottom);
 
             damage.RelativePosition = new Vector2(strength.Right + Anchor, strength.RelativePosition.Y);
-            armor.RelativePosition = new Vector2(damage.RelativePosition.X, damage.Bottom);
+            armor.RelativePosition = new Vector2(damage.RelativePosition.X, damage.Bottom + Anchor * 3);
             moveSpeed.RelativePosition = new Vector2(damage.RelativePosition.X, armor.Bottom);
 
             this.Add(moveSpeed);

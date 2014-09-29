@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Output;
-using Input;
+using IO;
+using IO;
 using ScriptLib;
 using Engine.Systems;
 //using Input;
 
 namespace Engine
 {
-    public class ShanoRpg : OutputDevice
+    public class ShanoRpg
     {
         /// <summary>
         /// The frames per second we aim to run at. 
@@ -27,7 +27,7 @@ namespace Engine
         /// <summary>
         /// The current world map. 
         /// </summary>
-        Map WorldMap;
+        WorldMap WorldMap;
 
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Engine
         /// <summary>
         /// Gets all entities currently in the game. 
         /// </summary>
-        public IEnumerable<Entity> Entities
+        public IEnumerable<Unit> Entities
         {
             get { return WorldMap.Entities; }
         }
@@ -55,7 +55,7 @@ namespace Engine
             {
                 throw new Exception("Unable to compile some of the abilities!");
             }
-            this.WorldMap = new Map(mapSeed);
+            this.WorldMap = new WorldMap(mapSeed);
 
             this.Players = new List<Player>();
 
@@ -70,7 +70,7 @@ namespace Engine
             };
             MainThread.Start();
 
-            var c = new Creature("Goshko", 1)
+            var c = new ShanoMonster("Goshko", 1)
             {
                 Location = new Vector(5, 5),
             };
@@ -103,7 +103,7 @@ namespace Engine
             AddAbility(p.Hero, "Attack");
         }
 
-        public void AddCreature(Creature c)
+        public void AddCreature(ShanoMonster c)
         {
             this.WorldMap.AddEntity(c);
         }
@@ -140,20 +140,21 @@ namespace Engine
             foreach (var e in Entities)
                 e.Update(msElapsed);
 
-
+            foreach (var p in Players)
+                p.Update();
 
             //update local hero state
             //foreach()
         }
 
-        public IEnumerable<Entity> GetUnitsInRange(Entity fromUnit, float range)
+        public IEnumerable<Unit> GetUnitsInRange(Unit fromUnit, float range)
         {
             var rsq = range * range;
             return Entities
                 .Where(e => e.Location.DistanceToSquared(fromUnit.Location) <= rsq);
         }
 
-        public IEnumerable<IEntity> GetEntities(IHero h)
+        public IEnumerable<IUnit> GetUnits(IHero h)
         {
             return Entities;
         }
@@ -179,7 +180,7 @@ namespace Engine
 
 
 
-        public void AddInputDevice(InputDevice d)
+        public void AddClient(IClient d)
         {
             throw new NotImplementedException();
         }
