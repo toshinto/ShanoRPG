@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace IO
 {
     /// <summary>
-    /// An interface to a (local or remote) game server. 
-    /// Supports updating movement state, as well as registering special actions. (abilities)
+    /// Represents an interface to a (local or remote) game server as seen from the game client.  
+    /// Supports updating movement state, registering special actions (abilities), 
+    /// as well as providing the client with information about the game. 
     /// </summary>
     public interface IServer
     {

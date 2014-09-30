@@ -194,8 +194,16 @@ namespace ShanoRpgWinGl
                 //start drawing
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
+                //terrain
                 drawTerrain();
+
+                //hero
                 drawHero();
+
+                //units..
+                foreach (var u in Server.GetUnits())
+                    drawUnit(u);
+                //effects..
 
                 //interface
                 mainInterface.Draw(spriteBatch);
@@ -222,13 +230,19 @@ namespace ShanoRpgWinGl
         {
             var moving = (Server.MovementState.XDirection | Server.MovementState.YDirection) != 0;
             TextureCache.InGameHero.Period = moving ? 100 : 1000;
-            Vector2 heroSize = new Vector2(0.8f, 0.8f);
+
+            Vector2 heroSize = new Vector2((float)localHero.Size);
             TextureCache.InGameHero.DrawInGame(spriteBatch, ScreenInfo.CenterPoint - heroSize / 2, heroSize);
         }
 
-        private void drawEntity(IUnit u)
+        private void drawUnit(IUnit u)
         {
+            if (u == localHero)
+                return;
 
+            Vector2 uSize = new Vector2((float)u.Size);
+            var rsc = TextureCache.GetResouce(u.Model);
+            TextureCache.InGameHero.DrawInGame(spriteBatch, u.Location.ToVector2() - uSize / 2, uSize);
         }
 
         private void drawTerrain()
@@ -248,18 +262,7 @@ namespace ShanoRpgWinGl
 
                     var mapTile = mapTiles[ix + xRange, iy + yRange];
 
-                    Sprite tileTexture = null;
-                    switch (mapTile)
-                    {
-                        case MapTile.Dirt:
-                            tileTexture = TextureCache.DirtTile;
-                            break;
-                        case MapTile.Grass:
-                            tileTexture = TextureCache.GrassTile;
-                            break;
-                        default:
-                            throw new Exception("nmz e");
-                    }
+                    Sprite tileTexture = TextureCache.Terrain.GetSprite(mapTile);
 
                     tileTexture.DrawInGame(spriteBatch, new Vector2(tileX, tileY), new Vector2(1, 1));
                 }

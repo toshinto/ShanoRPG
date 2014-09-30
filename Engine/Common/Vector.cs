@@ -31,6 +31,11 @@ namespace Engine.Objects
             this.y = y;
         }
 
+        public Vector(double v)
+        {
+            this.x = this.y = v;
+        }
+
         internal Vector Floor()
         {
             return new Vector(Math.Floor(X), Math.Floor(Y));
@@ -44,6 +49,22 @@ namespace Engine.Objects
         public static Vector operator -(Vector a, Vector b)
         {
             return new Vector(a.X - b.X, a.Y - b.Y);
+        }
+
+        /// <summary>
+        /// Performs element-wise subtraction from the given vector with the provided value. 
+        /// </summary>
+        public static Vector operator -(Vector a, double v)
+        {
+            return new Vector(a.X - v, a.Y - v);
+        }
+
+        /// <summary>
+        /// Performs element-wise addition from the given vector with the provided value. 
+        /// </summary>
+        public static Vector operator +(Vector a, double v)
+        {
+            return new Vector(a.X + v, a.Y + v);
         }
 
         public static Vector operator *(Vector a, double mult)
@@ -107,6 +128,11 @@ namespace Engine.Objects
         public bool Inside(Vector pos, Vector size)
         {
             return X >= pos.x && y >= pos.y && x <= pos.x + size.x && y <= pos.y + size.y;
+        }
+
+        public Point ToPoint()
+        {
+            return new Point((int)x, (int)y);
         }
     }
 }

@@ -19,27 +19,11 @@ namespace Engine.Maps
 
         private IModule terrainModule;
 
-
-        /// <summary>
-        /// A list of all the (spawned) monsters in the game. 
-        /// </summary>
-        List<Unit> entities = new List<Unit>();
-
-        public IEnumerable<Unit> Entities
-        {
-            get { return entities; }
-        }
-
         public WorldMap(int seed)
         {
             this.Seed = seed;
 
             initTerrain();
-        }
-
-        internal void AddEntity(Unit e)
-        {
-            this.entities.Add(e);
         }
 
 

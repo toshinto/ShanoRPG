@@ -63,6 +63,7 @@ namespace Engine.Objects
         [ProtoMember(5)]
         public double BaseAgility;
 
+
         private Dictionary<string, Ability> abilities = new Dictionary<string, Ability>();
 
         public double CurrentStrength { get; protected set; }
@@ -94,6 +95,8 @@ namespace Engine.Objects
             : base(name)
         {
             this.BaseMoveSpeed = 5;
+            this.Size = 0.6;
+            this.Model = "Units\\hero";
             CurrentLife = BaseLife = 100;
         }
 
@@ -114,15 +117,15 @@ namespace Engine.Objects
         /// <param name="msElapsed"></param>
         protected override void UpdateMovement(int msElapsed)
         {
-            var dx = MovementState.XDirection;
-            var dy = MovementState.YDirection;
+            var dx = Math.Sign(MovementState.XDirection);
+            var dy = Math.Sign(MovementState.YDirection);
 
             var dist = this.CurrentMoveSpeed * msElapsed / 1000;
 
             if (dx != 0 || dy != 0)
             {
-                if (dx * dy != 0)
-                    dist = dist / Math.Sqrt(2);
+                if (dx * dy != 0)                   // if we are moving on a diagonal
+                    dist = dist / Math.Sqrt(2);     // make the x/y component
                 this.Location += new Vector(dx, dy) * dist;
             }
         }

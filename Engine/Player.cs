@@ -26,6 +26,9 @@ namespace Engine
             inputDevice.OnSpecialAction += Hero.OnSpecialAction;
         }
 
+        /// <summary>
+        /// Updates the movement state of the player. 
+        /// </summary>
         public void Update()
         { 
             this.Hero.MovementState = InputDevice.MovementState;

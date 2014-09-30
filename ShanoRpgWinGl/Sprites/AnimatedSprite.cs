@@ -21,9 +21,14 @@ namespace ShanoRpgWinGl
 
         public AnimatedSprite(Texture2D texture, int rows, int columns, int period = 500)
         {
+            if (rows < 1 || columns < 1)
+                throw new ArgumentOutOfRangeException("Number of cells must be a positive integer. ");
             this.Texture = texture;
             this.Rows = rows;
             this.Columns = columns;
+
+            for(int ix = 0; ix < rows; ix++)
+                for(int iy = 0; iy < rows; iy++)
 
             currentFrame = 0;
             totalFrames = Rows * Columns;
@@ -33,6 +38,8 @@ namespace ShanoRpgWinGl
 
         public override void Update(int msElapsed)
         {
+            if (totalFrames == 1)
+                return;
             timeElapsed += msElapsed;
             while(timeElapsed > Period)
             {
@@ -50,7 +57,8 @@ namespace ShanoRpgWinGl
 
             int width = Texture.Width / Columns;
             int height = Texture.Height / Rows;
-            int row = (int)((float)currentFrame / (float)Columns);
+
+            int row = currentFrame / Columns;
             int column = currentFrame % Columns;
 
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);

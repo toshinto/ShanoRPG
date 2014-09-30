@@ -14,13 +14,11 @@ namespace ShanoRpgWinGl
         /// <summary>
         /// Gets or sets the camera center point in game co-ordinates. 
         /// </summary>
-        /// <returns></returns>
         public static Vector2 CenterPoint { get; set; }
 
         /// <summary>
         /// Gets or sets the screen size in pixels. 
         /// </summary>
-        /// <returns></returns>
         public static Point ScreenSize { get; set; }
 
         /// <summary>

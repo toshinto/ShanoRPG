@@ -6,17 +6,78 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
+using IO;
 
 namespace ShanoRpgWinGl
 {
     static class TextureCache
     {
-        public static Sprite GrassTile { get; private set; }
-        public static Sprite DirtTile { get; private set; }
+        /// <summary>
+        /// The directory where all the resources are. 
+        /// </summary>
+        const string ContentDir = @"Content\";
+
+        public static class Terrain
+        {
+            public static Sprite Grass { get; set; }
+            public static Sprite Dirt { get; set; }
+
+            public static Sprite GetSprite(MapTile t)
+            {
+                switch (t)
+                {
+                    case MapTile.Dirt:
+                        return TextureCache.Terrain.Dirt;
+                    case MapTile.Grass:
+                        return TextureCache.Terrain.Grass;
+                    default:
+                        throw new Exception("Unrecognized MapTile. ");
+                }
+            }
+        }
+
+        public static class Icon
+        {
+            private static Dictionary<string, Sprite> icons = new Dictionary<string, Sprite>();
+
+            public static Sprite Border { get; private set; }
+            public static Sprite BorderHover { get; private set; }
+
+            public static IReadOnlyDictionary<string, Sprite> Icons
+            {
+                get { return icons; }
+            }
+
+            const string Directory = @"Icons\";
+
+            public static void Load()
+            {
+                var iconDir = Path.Combine(ContentDir, Directory);
+                foreach (var f in System.IO.Directory.EnumerateFiles(iconDir, "*.png", SearchOption.AllDirectories))
+                {
+                    var fne = f
+                        .Take(f.LastIndexOf("."))
+                        .Skip(ContentDir.Length);
+                    var fn = new string(fne.ToArray());
+
+                    loadSprite(fn);
+                }
+
+                Border = Get("border");
+                BorderHover = Get("border_hover");
+            }
+
+
+            public static Sprite Get(string s)
+            {
+                var iconId = Path.Combine(Directory, s);
+                return sprites[iconId];
+            }
+        }
+
         public static AnimatedSprite InGameHero { get; set; }
 
         public static Sprite BlankTexture { get; private set; }
-        public static Sprite IconBorder { get; private set; }
 
         public static IEnumerable<Sprite> Sprites
         {
@@ -42,37 +103,19 @@ namespace ShanoRpgWinGl
         /// </summary>
         static void loadTextures()
         {
-            loadIcons();
-            GrassTile = loadSprite(@"terrain\grass");
-            DirtTile = loadSprite(@"terrain\dirt");
+            Icon.Load();
+            Terrain.Grass = loadSprite(@"terrain\grass");
+            Terrain.Dirt = loadSprite(@"terrain\dirt");
             BlankTexture = loadSprite("1");
 
             InGameHero = loadSprite(@"units\hero", 1, 3, 50);
 
         }
 
-        const string contentDir = @"Content\";
-        const string iconFolder = @"Icons\";
-        private static void loadIcons()
+
+        internal static object GetResouce(string model)
         {
-            var iconDir = Path.Combine(contentDir, iconFolder);
-            foreach (var f in Directory.EnumerateFiles(iconDir, "*.png", SearchOption.AllDirectories))
-            {
-                var fne = f
-                    .Take(f.LastIndexOf("."))
-                    .Skip(contentDir.Length);
-                var fn = new string(fne.ToArray());
-
-                loadSprite(fn);
-            }
-
-            IconBorder = GetIcon("border");
-        }
-
-        public static Sprite GetIcon(string iconName)
-        {
-            var iconId = Path.Combine(iconFolder, iconName);
-            return sprites[iconId];
+            return sprites[model];
         }
 
 
@@ -98,8 +141,5 @@ namespace ShanoRpgWinGl
             sprites.Add(name, sprite);
             return sprite;
         }
-
-
-
     }
 }

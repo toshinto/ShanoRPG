@@ -33,8 +33,11 @@ namespace ShanoRpgWinGl.UI
 
         public override void Draw(SpriteBatch sb)
         {
-            TextureCache.GetIcon(Ability.Icon).Draw(sb, ScreenPosition, ScreenSize);
-            TextureCache.IconBorder.Draw(sb, ScreenPosition, ScreenSize);
+            TextureCache.Icon.Get(Ability.Icon).Draw(sb, ScreenPosition, ScreenSize);
+
+            var border = MouseOver ? TextureCache.Icon.BorderHover : TextureCache.Icon.Border;
+
+            border.Draw(sb, ScreenPosition, ScreenSize);
 
             var cdHeight = ScreenSize.Y * Ability.CurrentCooldown / Ability.Cooldown;
             if (cdHeight > 0)

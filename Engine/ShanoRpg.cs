@@ -25,9 +25,14 @@ namespace Engine
         public readonly Thread MainThread;
 
         /// <summary>
-        /// The current world map. 
+        /// The current world map containing the terrain info. 
         /// </summary>
         WorldMap WorldMap;
+
+        /// <summary>
+        /// The current game map containing unit/doodad/sfx info. 
+        /// </summary>
+        GameMap GameMap;
 
 
         /// <summary>
@@ -36,18 +41,8 @@ namespace Engine
         List<Player> Players;
 
 
-        List<Ability> Abilities;
-
-
         Scenario scenario;
 
-        /// <summary>
-        /// Gets all entities currently in the game. 
-        /// </summary>
-        public IEnumerable<Unit> Entities
-        {
-            get { return WorldMap.Entities; }
-        }
 
         public ShanoRpg(int mapSeed, Player localPlayer)
         {
@@ -58,6 +53,8 @@ namespace Engine
             this.WorldMap = new WorldMap(mapSeed);
 
             this.Players = new List<Player>();
+
+            this.GameMap = new GameMap();
 
             this.AddPlayer(localPlayer);
 
@@ -70,9 +67,11 @@ namespace Engine
             };
             MainThread.Start();
 
+            //add a random fuckin monster. 
             var c = new ShanoMonster("Goshko", 1)
             {
                 Location = new Vector(5, 5),
+                Model = "units\\hero",
             };
 
             AddCreature(c);
@@ -98,19 +97,17 @@ namespace Engine
         public void AddPlayer(Player p)
         {
             this.Players.Add(p);
-            this.WorldMap.AddEntity(p.Hero);
 
+            //add his hero to the map. 
+            this.GameMap.AddUnit(p.Hero);
+
+            //add a placeholder spell till we figure something better. 
             AddAbility(p.Hero, "Attack");
         }
 
         public void AddCreature(ShanoMonster c)
         {
-            this.WorldMap.AddEntity(c);
-        }
-
-        void LocalInput_OnAbilityCast(int obj)
-        {
-            throw new NotImplementedException();
+            this.GameMap.AddUnit(c);
         }
 
         /// <summary>
@@ -121,13 +118,14 @@ namespace Engine
             int frameStartTime, drawTime = 0;
             while(true)
             {
-                var toSleep = 1000 / FPS - drawTime;
-                var isThrottled = toSleep < 0;
+                var toSleep = 1000 / FPS - drawTime;    //time to sleep
+                var isThrottled = toSleep < 0;          //or no sleep?
 
                 if (!isThrottled)
                     Thread.Sleep(toSleep);
                 else
                     Console.WriteLine("Warning: Drawing too slow!");
+
                 frameStartTime = Environment.TickCount;
                 this.Update(1000 / FPS);
                 drawTime = Environment.TickCount - frameStartTime;
@@ -136,27 +134,16 @@ namespace Engine
 
         private void Update(int msElapsed)
         {
+            GameMap.Update(msElapsed);
 
-            foreach (var e in Entities)
-                e.Update(msElapsed);
 
             foreach (var p in Players)
                 p.Update();
-
-            //update local hero state
-            //foreach()
         }
 
-        public IEnumerable<Unit> GetUnitsInRange(Unit fromUnit, float range)
+        public IEnumerable<IUnit> GetNearbyUnits(Hero h)
         {
-            var rsq = range * range;
-            return Entities
-                .Where(e => e.Location.DistanceToSquared(fromUnit.Location) <= rsq);
-        }
-
-        public IEnumerable<IUnit> GetUnits(IHero h)
-        {
-            return Entities;
+            return GameMap.GetUnitsInRect(h.Location - (Vector)Constants.ClientParams.WindowSize / 2, Constants.ClientParams.WindowSize);
         }
 
         public void GetNearbyTiles(IHero h, ref MapTile[,] tileMap, out double heroX, out double heroY)
@@ -164,18 +151,19 @@ namespace Engine
             heroX = h.Location.X;
             heroY = h.Location.Y;
 
-            const int xRange = 8;
-            const int yRange = 5;
-            const int xSize = xRange * 2 + 1;
-            const int ySize = yRange * 2 + 1;
+            const int xRange = Constants.ClientParams.WindowWidth / 2;
+            const int yRange = Constants.ClientParams.WindowHeight / 2;
+
+            const int xSendSize = xRange * 2 + 1;
+            const int ySendSize = yRange * 2 + 1;
 
             var x = (int)Math.Floor(heroX - xRange);
             var y = (int)Math.Floor(heroY - yRange);
 
-            if (tileMap.GetLength(0) < xSize ||tileMap.GetLength(1) < ySize)
+            if (tileMap.GetLength(0) < xSendSize ||tileMap.GetLength(1) < ySendSize)
                 throw new ArgumentOutOfRangeException("Tile array should be larger than the given. ");
 
-            WorldMap.GetMap(x, y, xSize, ySize, ref tileMap);
+            WorldMap.GetMap(x, y, xSendSize, ySendSize, ref tileMap);
         }
 
 

@@ -9,6 +9,10 @@ namespace IO
     {
         IVector Location { get; }
 
+        string Model { get; }
+
+        double Size { get; }
+
         double CurrentLife { get; }
         double CurrentMaxLife { get; }
 

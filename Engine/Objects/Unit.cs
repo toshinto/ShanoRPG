@@ -43,7 +43,7 @@ namespace Engine.Objects
         [ProtoMember(4)]
         public double CurrentLife { get; set; }
 
-        public string Icon { get; set; }
+        public string Model { get; set; }
 
         [ProtoMember(5)]
         public double CurrentMana { get; set; }
@@ -85,7 +85,10 @@ namespace Engine.Objects
 
         protected Unit() { }
 
-        public Unit(string name) : base(name) { }
+        public Unit(string name) : base(name)
+        {
+            this.Size = 0.4;
+        }
 
         /// <summary>
         /// Updates the entity's buffs

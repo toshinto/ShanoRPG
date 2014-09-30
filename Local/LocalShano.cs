@@ -10,19 +10,39 @@ using ShanoRpgWinGl;
 
 namespace Local
 {
+    /// <summary>
+    /// Represents a locally played game. 
+    /// Automatically starts both the engine and the client. 
+    /// </summary>
     public class LocalShano : IClient, IServer
     {
-        public IHero LocalHero { get; private set; }
+        public Hero LocalHero { get; private set; }
 
         public MovementState MovementState { get; set; }
 
+        IHero IServer.LocalHero
+        {
+            get { return LocalHero; }
+        }
+
         public event Action<Command, byte[]> OnSpecialAction;
 
+        /// <summary>
+        /// Gets the game engine. 
+        /// </summary>
         public readonly ShanoRpg ShanoGame;
 
+        /// <summary>
+        /// Gets the game client. 
+        /// </summary>
         public readonly MainGame ShanoClient;
 
-        public LocalShano(int mapSeed, IHero h)
+        /// <summary>
+        /// Creates a new local game instance, putting the provided hero in the map with the specified seed. 
+        /// </summary>
+        /// <param name="mapSeed">The map seed. </param>
+        /// <param name="h">The hero to play with. </param>
+        public LocalShano(int mapSeed, Hero h)
         {
             MovementState = new MovementState();
             LocalHero = h;
@@ -32,7 +52,7 @@ namespace Local
 
             //create the game engine
             //hack: should accept IHero?
-            ShanoGame = new ShanoRpg(mapSeed, new Player((Hero)h, this));
+            ShanoGame = new ShanoRpg(mapSeed, new Player(h, this));
 
             //link them
             ShanoClient.Server = this;
@@ -49,7 +69,7 @@ namespace Local
 
         public IEnumerable<IUnit> GetUnits()
         {
-            return ShanoGame.GetUnits(LocalHero);
+            return ShanoGame.GetNearbyUnits(LocalHero);
         }
 
         public void RegisterAction(Command action, byte[] p)
