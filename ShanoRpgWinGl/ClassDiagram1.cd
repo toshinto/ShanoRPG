@@ -29,44 +29,18 @@
       <FileName>MainGame.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ShanoRpgWinGl.AnimatedSprite" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAgAAAgAAAAkAAAAgAAAAAAAAAAAAAAAIAAAiAAAI=</HashCode>
-      <FileName>Sprites\AnimatedSprite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ShanoRpgWinGl.SimpleSprite" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAACAAAA=</HashCode>
-      <FileName>Sprites\SimpleSprite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="ShanoRpgWinGl.Sprite" Collapsed="true">
     <Position X="2" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AASAgAAAAAAACkAAAAAAAABAAGAAAAAAAAIAAAiAABI=</HashCode>
       <FileName>Sprites\Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ShanoRpgWinGl.TextureCache">
+  <Class Name="ShanoRpgWinGl.Sprites.TextureCache">
     <Position X="5.25" Y="2.5" Width="1.5" />
-    <NestedTypes>
-      <Class Name="ShanoRpgWinGl.TextureCache.Terrain" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>TextureCache.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="ShanoRpgWinGl.TextureCache.Icon" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>TextureCache.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>gAACAAAABAAAACAAAABAAAAAAAAABAAAAIAAAACAAIQ=</HashCode>
-      <FileName>TextureCache.cs</FileName>
+      <HashCode>AAACAAAABEAAACBAAABAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Sprites\TextureCache.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="MainFont" />

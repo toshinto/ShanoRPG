@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ShanoRpgWinGl.Sprites;
 
 namespace ShanoRpgWinGl.UI
 {
@@ -123,7 +124,7 @@ namespace ShanoRpgWinGl.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             var backColor = new Color(50, 50, 50, 200);
-            TextureCache.BlankTexture.Draw(spriteBatch, ScreenPosition, ScreenSize, backColor);
+            SpriteCache.BlankTexture.Draw(spriteBatch, ScreenPosition, ScreenSize, backColor);
 
             base.Draw(spriteBatch);
         }

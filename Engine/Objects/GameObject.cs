@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IO;
 using ProtoBuf;
 
 namespace Engine.Objects
@@ -15,7 +16,7 @@ namespace Engine.Objects
     [ProtoInclude(1, typeof(Unit))]
     [ProtoInclude(2, typeof(Doodad))]
     [ProtoInclude(3, typeof(SpecialEffect))]
-    public abstract class GameObject
+    public abstract class GameObject : IGameObject
     {
         private static int guidCount = 0;
         private static int GetGuid()
@@ -34,6 +35,9 @@ namespace Engine.Objects
         /// </summary>
         [ProtoMember(5)]
         public double Size { get; set; }
+
+        [ProtoMember(6)]
+        public string Model { get; set; }
 
         /// <summary>
         /// Gets the globally unique identifier of the object. 
@@ -59,15 +63,32 @@ namespace Engine.Objects
             }
         }
 
+        IVector IGameObject.Location
+        {
+            get
+            {
+                return this.Location;
+            }
+
+            set
+            {
+                this.Location = new Vector(value);
+            }
+        }
+
         public event Action<GameObject> LocationChanged;
 
-        protected GameObject() { }
+        protected GameObject()
+        {
+            this.Size = 0.4;
+            this.Model = "default";
+            Guid = GetGuid();
+        }
 
         public GameObject(string name)
+            : this()
         {
             this.Name = name;
-            this.Size = 0.4;
-            Guid = GetGuid();
         }
     }
 }

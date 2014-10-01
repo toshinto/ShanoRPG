@@ -36,6 +36,12 @@ namespace Engine.Objects
             this.x = this.y = v;
         }
 
+        public Vector(IVector v)
+        {
+            this.x = v.X;
+            this.y = v.Y;
+        }
+
         internal Vector Floor()
         {
             return new Vector(Math.Floor(X), Math.Floor(Y));

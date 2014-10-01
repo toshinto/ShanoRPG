@@ -5,13 +5,8 @@ using System.Text;
 
 namespace IO
 {
-    public interface IUnit
+    public interface IUnit : IGameObject
     {
-        IVector Location { get; }
-
-        string Model { get; }
-
-        double Size { get; }
 
         double CurrentLife { get; }
         double CurrentMaxLife { get; }

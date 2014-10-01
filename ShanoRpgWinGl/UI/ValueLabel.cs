@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShanoRpgWinGl.Sprites;
 
 namespace ShanoRpgWinGl.UI
 {
@@ -31,7 +32,7 @@ namespace ShanoRpgWinGl.UI
 
         public override void Draw(SpriteBatch sb)
         {
-            TextureCache.BlankTexture.Draw(sb, ScreenPosition, ScreenSize, BackColor);
+            SpriteCache.BlankTexture.Draw(sb, ScreenPosition, ScreenSize, BackColor);
 
             TextureCache.MainFont.DrawString(sb, Text, TextColor, ScreenPosition.X + 6, ScreenPosition.Y + ScreenSize.Y / 2, yAnchor: 0.5f);
             TextureCache.MainFont.DrawString(sb, Value, ValueColor, ScreenPosition.X + ScreenSize.X - 6, ScreenPosition.Y + ScreenSize.Y / 2, xAnchor: 1.0f, yAnchor: 0.5f);

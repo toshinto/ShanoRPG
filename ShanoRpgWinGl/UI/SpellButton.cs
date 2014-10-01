@@ -7,16 +7,38 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using IO;
+using ShanoRpgWinGl.Sprites;
 
 namespace ShanoRpgWinGl.UI
 {
     class SpellButton : UserControl
     {
-        public IAbility Ability { get;set; }
+        private IAbility ability;
+
+        public event Action AbilityChanged;
+
+        private void OnAbilityChanged()
+        {
+            if (AbilityChanged != null)
+                AbilityChanged();
+        }
 
         public Keys Keybind { get; set; }
 
         public bool Clickable { get; set; }
+
+        public IAbility Ability
+        {
+            get { return ability; }
+            set
+            {
+                if (ability != value)
+                {
+                    ability = value;
+                    OnAbilityChanged();
+                }
+            }
+        }
 
         public SpellButton(Keys k = Keys.None)
         {
@@ -33,9 +55,10 @@ namespace ShanoRpgWinGl.UI
 
         public override void Draw(SpriteBatch sb)
         {
-            TextureCache.Icon.Get(Ability.Icon).Draw(sb, ScreenPosition, ScreenSize);
+            var tex = TextureCache.Get(ResourceType.Icon, Ability.Icon);
+            sb.Draw(tex, ScreenPosition, ScreenSize);
 
-            var border = MouseOver ? TextureCache.Icon.BorderHover : TextureCache.Icon.Border;
+            var border = MouseOver ? SpriteCache.Icon.BorderHover : SpriteCache.Icon.Border;
 
             border.Draw(sb, ScreenPosition, ScreenSize);
 
@@ -43,7 +66,7 @@ namespace ShanoRpgWinGl.UI
             if (cdHeight > 0)
             {
                 var cdPos = new Point(ScreenPosition.X, ScreenPosition.Y + ScreenSize.Y - cdHeight);
-                TextureCache.BlankTexture.Draw(sb, cdPos, new Point(ScreenSize.X, cdHeight), Color.Black.SetAlpha(120));
+                SpriteCache.BlankTexture.Draw(sb, cdPos, new Point(ScreenSize.X, cdHeight), Color.Black.SetAlpha(120));
             }
             base.Draw(sb);
         }

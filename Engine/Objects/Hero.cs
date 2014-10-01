@@ -96,7 +96,7 @@ namespace Engine.Objects
         {
             this.BaseMoveSpeed = 5;
             this.Size = 0.6;
-            this.Model = "Units\\hero";
+            this.Model = "hero";
             CurrentLife = BaseLife = 100;
         }
 

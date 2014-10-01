@@ -43,16 +43,18 @@ namespace Engine.Objects
         [ProtoMember(4)]
         public double CurrentLife { get; set; }
 
-        public string Model { get; set; }
-
         [ProtoMember(5)]
         public double CurrentMana { get; set; }
 
-        IVector IUnit.Location
+        IVector IGameObject.Location
         {
             get
             {
-                return Location;
+                return this.Location;
+            }
+            set
+            {
+                this.Location = new Vector(value);
             }
         }
 
@@ -110,7 +112,6 @@ namespace Engine.Objects
             CurrentMaxDamage = BaseMaxDamage + Buffs.Sum(b => b.MaxDamage);
             CurrentMoveSpeed = BaseMoveSpeed * (100 + Buffs.Sum(b => b.MoveSpeedPerc)) / 100;
             CurrentAttacksPerSecond = BaseAttacksPerSecond * (100 + Buffs.Sum(b => b.AttackSpeedPerc)) / 100;
-
         }
 
         protected abstract void UpdateMovement(int msElapsed);

@@ -44,6 +44,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="Objects\IAbility.cs" />
     <Compile Include="IServer.cs" />
+    <Compile Include="Objects\IGameObject.cs" />
     <Compile Include="Objects\IUnit.cs" />
     <Compile Include="Objects\IHero.cs" />
     <Compile Include="Common\IVector.cs" />

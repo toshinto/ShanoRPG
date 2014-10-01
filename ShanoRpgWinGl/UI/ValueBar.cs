@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShanoRpgWinGl.Sprites;
 
 namespace ShanoRpgWinGl.UI
 {
@@ -27,11 +28,11 @@ namespace ShanoRpgWinGl.UI
         public override void Draw(SpriteBatch sb)
         {
 
-            TextureCache.BlankTexture.Draw(sb, ScreenPosition, ScreenSize, BackColor);
+            SpriteCache.BlankTexture.Draw(sb, ScreenPosition, ScreenSize, BackColor);
 
             if (MaxValue > 0)
             {
-                TextureCache.BlankTexture.Draw(sb, ScreenPosition, new Point((int)(ScreenSize.X * Value / MaxValue), ScreenSize.Y), ForeColor);
+                SpriteCache.BlankTexture.Draw(sb, ScreenPosition, new Point((int)(ScreenSize.X * Value / MaxValue), ScreenSize.Y), ForeColor);
             }
 
             if (ShowText)

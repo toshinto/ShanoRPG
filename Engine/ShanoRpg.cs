@@ -71,7 +71,6 @@ namespace Engine
             var c = new ShanoMonster("Goshko", 1)
             {
                 Location = new Vector(5, 5),
-                Model = "units\\hero",
             };
 
             AddCreature(c);

@@ -14,6 +14,8 @@ using ShanoRpgWinGl.UI;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using ShanoRpgWinGl.Objects;
+using ShanoRpgWinGl.Sprites;
 #endregion
 
 namespace ShanoRpgWinGl
@@ -36,7 +38,7 @@ namespace ShanoRpgWinGl
         MainForm mainInterface;
 
         /// <summary>
-        /// Gets our local hero. 
+        /// Gets the local hero. 
         /// </summary>
         readonly IHero localHero;
 
@@ -87,6 +89,8 @@ namespace ShanoRpgWinGl
         int sizeChangeCounter = 0;
 
         Rectangle lastWindowBounds;
+        private ObjectManager ObjectManager;
+
         private async void Window_ClientSizeChanged(object sender, EventArgs e)
         {
             var s = this.Window.ClientBounds;
@@ -113,6 +117,9 @@ namespace ShanoRpgWinGl
             //var heroTexture = Content.Load<Texture2D>("hero.bmp");
 
             TextureCache.LoadContent(Content);
+            SpriteCache.Load();
+
+            this.ObjectManager = new ObjectManager(localHero);
 
             // TODO: use this.Content to load your game content here
         }
@@ -143,9 +150,9 @@ namespace ShanoRpgWinGl
             //check local hero keys
             UpdateKeys();
 
-            //update sprites
-            foreach (var sprite in TextureCache.Sprites)
-                sprite.Update(msElapsed);
+            //update units
+            var us = Server.GetUnits();
+            ObjectManager.Update(msElapsed, us);
 
             //update UI
             mainInterface.Update(msElapsed);
@@ -197,12 +204,9 @@ namespace ShanoRpgWinGl
                 //terrain
                 drawTerrain();
 
-                //hero
-                drawHero();
+                //hero n units
+                ObjectManager.Draw(spriteBatch);
 
-                //units..
-                foreach (var u in Server.GetUnits())
-                    drawUnit(u);
                 //effects..
 
                 //interface
@@ -226,25 +230,6 @@ namespace ShanoRpgWinGl
             base.Draw(gameTime);
         }
 
-        private void drawHero()
-        {
-            var moving = (Server.MovementState.XDirection | Server.MovementState.YDirection) != 0;
-            TextureCache.InGameHero.Period = moving ? 100 : 1000;
-
-            Vector2 heroSize = new Vector2((float)localHero.Size);
-            TextureCache.InGameHero.DrawInGame(spriteBatch, ScreenInfo.CenterPoint - heroSize / 2, heroSize);
-        }
-
-        private void drawUnit(IUnit u)
-        {
-            if (u == localHero)
-                return;
-
-            Vector2 uSize = new Vector2((float)u.Size);
-            var rsc = TextureCache.GetResouce(u.Model);
-            TextureCache.InGameHero.DrawInGame(spriteBatch, u.Location.ToVector2() - uSize / 2, uSize);
-        }
-
         private void drawTerrain()
         {
             int xRange = Constants.Game.ScreenWidth / 2,
@@ -262,7 +247,7 @@ namespace ShanoRpgWinGl
 
                     var mapTile = mapTiles[ix + xRange, iy + yRange];
 
-                    Sprite tileTexture = TextureCache.Terrain.GetSprite(mapTile);
+                    Sprite tileTexture = SpriteCache.Terrain.GetSprite(mapTile);
 
                     tileTexture.DrawInGame(spriteBatch, new Vector2(tileX, tileY), new Vector2(1, 1));
                 }
