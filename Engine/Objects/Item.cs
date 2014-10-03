@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Common;
 
 namespace Engine.Objects
 {
-    enum EquipSlot
-    {
-        None,
-        Head,
-        Torso,
-        Hand
-    };
-    class Item
+    public class Item
     {
         public string ItemName;
         public string ItemIcon;

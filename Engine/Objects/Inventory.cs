@@ -3,53 +3,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Common;
 
 namespace Engine.Objects
 {
     class Inventory
     {
-        const int BackpackWidht=5;
-        const int BackpackHeight=4;
-        private int numberOfItemsInBackspack;
-        public Item[,] Backpack;
-        Dictionary<EquipSlot, Item>ItemsEquiped = new Dictionary<EquipSlot, Item>();
+        const int BackpackWidth = 5;
+        const int BackpackHeight = 4;
+        const int BackpackSize = BackpackWidth * BackpackHeight;
+
+        private int backpackItemCount;  //numberOfItemsInBackpack
+
+        Item[,] Backpack;
+
+        Dictionary<EquipSlot, Item> EquippedItems = new Dictionary<EquipSlot, Item>();
 
         public Inventory()
         {
-            numberOfItemsInBackspack = 0;
-            Backpack = new Item[BackpackWidht, BackpackHeight];
-            ItemsEquiped.Add(EquipSlot.Head, null);
-            ItemsEquiped.Add(EquipSlot.Torso, null);
-            ItemsEquiped.Add(EquipSlot.Hand, null);
+            Backpack = new Item[BackpackWidth, BackpackHeight];
+            //ItemsEquiped.Add(EquipSlot.Head, null);
+            //ItemsEquiped.Add(EquipSlot.Torso, null);  //nqma nujda ot teq
+            //ItemsEquiped.Add(EquipSlot.Hand, null);
         }
-        public bool TryPickUpItem(Item i)
+
+        public bool TryPickupItem(Item i)
         {
-            if(numberOfItemsInBackspack == BackpackWidht * BackpackHeight)
+            //continue only if there is space in the backpack. 
+            if(backpackItemCount == BackpackSize)
                 return false;
-            else 
-            {
-                for (int j = 0; j < BackpackWidht; j++)
-                    for (int k = 0; k < BackpackHeight; k++)
-                        if (Backpack[j, k] == null)
-                        {
-                            Backpack[j, k] = i;
-                            numberOfItemsInBackspack++;
-                            return true;
-                        }                   
-                return false;
-            }
+
+            // are we always allowed to pick an item as the client requests?
+            // what if the item is on the other side of the world?
+
+            for (int j = 0; j < BackpackWidth; j++)
+                for (int k = 0; k < BackpackHeight; k++)
+                    if (Backpack[j, k] == null)
+                    {
+                        Backpack[j, k] = i;
+                        backpackItemCount++;
+                        return true;
+                    }
+                
+            return false;
         }
         public bool TryEquipItem(int backpackX, int backpackY, EquipSlot slot)
         {
-            Item temp;
-            if (Backpack[backpackX, backpackY] != null && Backpack[backpackX, backpackY].ItemType != EquipSlot.None)
-            {
-                temp = ItemsEquiped[slot];
-                ItemsEquiped[slot] = Backpack[backpackX, backpackY];
-                Backpack[backpackX, backpackY] = temp; 
-                return true;
-            }
-            else return false;
+            //continue only if there is an item in this slot and it is equippable. 
+            if (Backpack[backpackX, backpackY] == null || Backpack[backpackX, backpackY].ItemType == EquipSlot.None)
+                return false;
+
+            Item oldItem = null;
+            EquippedItems.TryGetValue(slot, out oldItem);   //ako ima item go vzema, inache ne bara oldItem
+            EquippedItems[slot] = Backpack[backpackX, backpackY];
+            Backpack[backpackX, backpackY] = oldItem; 
+            return true;
         }
         public bool TryDropItem(int backpackX, int backpackY)
         {

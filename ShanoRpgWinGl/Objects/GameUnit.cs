@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShanoRpgWinGl.Properties;
 using ShanoRpgWinGl.Sprites;
 using ShanoRpgWinGl.UI;
 
@@ -52,10 +53,12 @@ namespace ShanoRpgWinGl.Objects
             Vector2 sz = new Vector2((float)Unit.Size);
             Sprite.Draw(sb, ScreenPosition, ScreenSize);
 
-            if (MouseOver)
+            if (MouseOver || Settings.Default.AlwaysShowHealthBars)
             {
-
-                TextureCache.MainFont.DrawString(sb, Unit.CurrentLife.ToString(), Color.Red, ScreenPosition.X, ScreenPosition.Y, 0.5f, 1f);
+                var barBackColor = Color.DarkGray.SetAlpha(210);
+                var barForeColor = Color.DarkRed.SetAlpha(210);
+                UI.ValueBar.DrawValueBar(sb, Unit.CurrentLife, Unit.CurrentMaxLife, ScreenPosition, new Point(ScreenSize.X, 20), barBackColor, barForeColor);
+                //TextureCache.MainFont.DrawString(sb, Unit.CurrentLife.ToString(), Color.Red, ScreenPosition.X, ScreenPosition.Y, 0.5f, 1f);
             }
         }
     }
