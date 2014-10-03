@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Engine.Objects;
+using Bin = Engine.Objects.Point;
 
 namespace Engine.Maps
 {
     /// <summary>
-    /// Maps objects in 2D space by dividing it into equally-sized bins contained in a hash-table. 
+    /// Maps objects in 2D space by dividing the space into equally-sized bins contained in a hash-table. 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class HashMap<T>
+    public class HashMap<T>
     {
         const int AvgItemsPerBin = 10;
 
         List<T>[] hashTable;
 
-        readonly Func<T, Vector> ExtractFunc;
+        readonly Func<T, Vector> fGetItemPosition;
 
         readonly Vector CellSize;
 
@@ -35,7 +37,7 @@ namespace Engine.Maps
 
         public HashMap(Func<T, Vector> extractFunc, Vector cellSize, int tableSize = 10)
         {
-            this.ExtractFunc = extractFunc;
+            this.fGetItemPosition = extractFunc;
             this.CellSize = cellSize;
 
             resizeTable(tableSize);
@@ -55,7 +57,7 @@ namespace Engine.Maps
                 foreach (var it in Items)
                 {
                     var pos = currentPos[it];
-                    var id = getBinIdHash(pos, newSize);
+                    var id = getId(pos, newSize);
                     newTable[id].Add(it);
                 }
             }
@@ -67,7 +69,7 @@ namespace Engine.Maps
         /// <summary>
         /// Returns the bin Id of the given item, as determined by the bin size. 
         /// </summary>
-        private Point getBinId(Vector pos)
+        private Bin getBin(Vector pos)
         {
             return (pos / CellSize).ToPoint();
         }
@@ -75,26 +77,26 @@ namespace Engine.Maps
         /// <summary>
         /// Gets the bin Id of the given cell in a table with a specified size (bins). 
         /// </summary>
-        private int getBinHash(Point p, int tSize)
+        private int getBinId(Bin b, int tableSize)
         {
-            return ((p.X.GetHashCode() | p.Y.GetHashCode()) % tSize + tSize) % tSize;
+            return ((b.X.GetHashCode() | b.Y.GetHashCode()) % tableSize + tableSize) % tableSize;
         }
 
         /// <summary>
-        /// Gets the bin hash of the given vector in the current table. 
+        /// Gets the table entry (id) of the given vector in the current table. 
         /// </summary>
-        private int getBinIdHash(Vector pos)
+        private int getId(Vector pos)
         {
-            return getBinIdHash(pos, TableSize);
+            return getId(pos, TableSize);
         }
 
         /// <summary>
-        /// Gets the bin hash of the given vector in a table with a specified size (bins). 
+        /// Gets the table entry (id) of the given vector in a table of size tableSize. 
         /// </summary>
-        private int getBinIdHash(Vector pos, int tSize)
+        private int getId(Vector pos, int tableSize)
         {
-            var binId = getBinId(pos);
-            var binHash = getBinHash(binId, tSize);
+            var binId = getBin(pos);
+            var binHash = getBinId(binId, tableSize);
             return binHash;
         }
 
@@ -103,17 +105,15 @@ namespace Engine.Maps
             if (currentPos.ContainsKey(item))
                 throw new ArgumentException("Cannot add an object which is already on the map. ");
 
-            //add to the hashmap. 
-            var iPos = ExtractFunc(item);
-            var binId = getBinIdHash(iPos);
+            //add to the hash table. 
+            var itPos = fGetItemPosition(item);
+            var binId = getId(itPos);
             hashTable[binId].Add(item);
 
-            //add to the list
-            currentPos.Add(item, iPos);
+            //add to the sanity dictionary. 
+            currentPos.Add(item, itPos);
 
-
-            //resize ?!
-
+            //resize the hashtable, if necessary
             if (currentPos.Count > AvgItemsPerBin * TableSize)
                 resizeTable(TableSize * 2);
         }
@@ -124,12 +124,15 @@ namespace Engine.Maps
                 throw new ArgumentException("Cannot remove an object which is not on the map. ");
 
             //remove from the hashmap using the item's current key to locate it. 
-            var iPos = currentPos[item];
-            var binId = getBinIdHash(iPos);
-            hashTable[binId].Remove(item);
+            var itPos = currentPos[item];
+            var binId = getId(itPos);
+            var removed = hashTable[binId].Remove(item);
+            Debug.Assert(removed);
 
-            //remove from the list
+            //remove from the sanity dictionary
             currentPos.Remove(item);
+           
+            //size back?
         }
 
 
@@ -138,52 +141,53 @@ namespace Engine.Maps
             return currentPos.ContainsKey(item);
         }
 
+        /// <summary>
+        /// Updates the recorded position of the given item in this HashMap. 
+        /// </summary>
+        /// <param name="item"></param>
         public void UpdateItem(T item)
         {
             if (!currentPos.ContainsKey(item))
                 throw new ArgumentException("Cannot update an item which is not on the map. ");
 
+            //get the old position of the item using the sanity dictionary. 
             var oldPos = currentPos[item];
-            var oldBin = getBinIdHash(oldPos);
+            var oldId = getId(oldPos);
+            
+            //get the new position of the item
+            var newPos = fGetItemPosition(item);
+            var newId = getId(newPos);
 
-            var newPos = ExtractFunc(item);
-            var newBin = getBinIdHash(newPos);
+            //update position in the sanity dictionary. 
+            currentPos[item] = newPos;
 
-            if (oldBin == newBin)
+            //continue only if we need to change the entry for this item. 
+            if (oldId == newId)
                 return;
 
-            hashTable[oldBin].Remove(item);
-            hashTable[newBin].Add(item);
+            Console.WriteLine("Someone entered bin " + newId);
 
-            currentPos[item] = newPos;
+            //add n remove entry
+            var removed = hashTable[oldId].Remove(item);
+            Debug.Assert(removed);
+            hashTable[newId].Add(item);
         }
 
         public IEnumerable<T> RangeQuery(Vector pos, Vector size)
         {
-            var cellStart = getBinId(pos);
-            var cellEnd = getBinId(pos + size);
+            var cellStart = getBin(pos);
+            var cellEnd = getBin(pos + size);
 
-            foreach (var p in cellStart.IterateToInclusive(cellEnd))
-            {
-                var binHash = getBinHash(p, TableSize);
-                var binTable = hashTable[binHash];
+            // get the distinct bin IDs of all bins inbetween (and including)
+            // the start and end points, then get their entries in the table. 
+            var bins = cellStart.IterateToInclusive(cellEnd)
+                .Select(p => getBinId(p, TableSize))            
+                .Distinct()
+                .Select(binId => hashTable[binId]);
 
-                //check if it is a bin on the contour of the area. 
-                if (p.X == cellStart.X || p.X == cellEnd.X || p.Y == cellStart.Y || p.Y == cellEnd.Y)
-                {
-                    // if so, we must check whether each item is inside the rect. 
-                    foreach (var it in binTable)
-                    {
-                        var iPos = currentPos[it];
-                        if (iPos.Inside(pos, size))
-                            yield return it;
-                    }
-                }
-                else
-                    // otherwise yield all items from the bin. 
-                    foreach (var it in binTable)
-                        yield return it;
-            }
+            // go thru the collected bin entries 
+            // and check whether each unit is inside the rect
+            return bins.SelectMany(bin => bin.Where(u => currentPos[u].Inside(pos, size)));
         }
     }
 }

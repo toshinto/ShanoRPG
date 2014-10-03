@@ -6,7 +6,7 @@ using System.Text;
 namespace Engine.Objects
 {
     /// <summary>
-    /// Represents any in-game effect which has a temporary effect on a unit's statistics. 
+    /// Represents any in-game effect which has a temporary or permanent effect on a unit's statistics. 
     /// </summary>
     public class Buff
     {
@@ -31,6 +31,23 @@ namespace Engine.Objects
 
         public double DurationLeft;
 
+        public bool IsAura
+        {
+            get { return double.IsPositiveInfinity(Duration); }
+        }
+
+        /// <summary>
+        /// Creates a new aura. 
+        /// </summary>
+        public Buff(int moveSpeed = 0, int atkSpeed = 0, double life = 0, double mana = 0,
+            double defense = 0, double minDmg = 0, double maxDmg = 0)
+            : this(double.PositiveInfinity, moveSpeed, atkSpeed, life, mana, defense, minDmg, maxDmg)
+        { }
+
+
+        /// <summary>
+        /// Creates a new aura. 
+        /// </summary>
         public Buff(double duration, int moveSpeed = 0, int atkSpeed = 0, double life = 0, double mana = 0, 
             double defense = 0, double minDmg = 0, double maxDmg = 0)
         {

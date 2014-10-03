@@ -76,11 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DamageType.cs" />
+    <Compile Include="Common\Rnd.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Maps\GameMap.cs" />
     <Compile Include="Maps\HashMap.cs" />
     <Compile Include="Maps\WorldMap.cs" />
-    <Compile Include="Objects\Aura.cs" />
     <Compile Include="Objects\Buff.cs" />
     <Compile Include="Objects\Doodad.cs" />
     <Compile Include="Objects\GameObject.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Objects\Item.cs" />
     <Compile Include="Objects\SpecialEffect.cs" />
     <Compile Include="Common\Vector.cs" />
+    <Compile Include="Objects\UnitHelper.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

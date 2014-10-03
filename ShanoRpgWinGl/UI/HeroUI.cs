@@ -102,7 +102,6 @@ namespace ShanoRpgWinGl.UI
 
         public override void Update(int msElapsed)
         {
-
             strength.Value = Hero.CurrentStrength.ToString("0");
             agility.Value = Hero.CurrentAgility.ToString("0");
             intellect.Value = Hero.CurrentIntellect.ToString("0");

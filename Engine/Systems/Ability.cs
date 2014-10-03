@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Maps;
 using Engine.Objects;
 using IO;
 
@@ -14,6 +15,7 @@ namespace Engine.Systems
         public Hero Hero { get; internal set; }
 
         public ShanoRpg Game { get; internal set; }
+        public GameMap Map { get; internal set; }
 
         public string Name { get; set; }
 
@@ -25,7 +27,7 @@ namespace Engine.Systems
 
         public readonly SpellType AbilityType;
 
-        public virtual int Cooldown { get { return 1000; } }
+        public int Cooldown { get; set; }
         public virtual int ManaCost { get { return 5; } }
         public virtual int LifeCost { get { return 0; } }
 
@@ -80,6 +82,13 @@ namespace Engine.Systems
         internal void Update(int msElapsed)
         {
             CurrentCooldown = Math.Max(0, CurrentCooldown - msElapsed);
+
+            OnUpdate(msElapsed);
+        }
+
+        public virtual void OnUpdate(int msElapsed)
+        {
+
         }
     }
 }

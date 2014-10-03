@@ -97,6 +97,12 @@ namespace Engine.Objects
             this.BaseMoveSpeed = 5;
             this.Size = 0.6;
             this.Model = "hero";
+
+            this.BaseStrength = 5;
+            this.BaseVitality= 5;
+            this.BaseIntellect = 5;
+            this.BaseAgility = 5;
+
             CurrentLife = BaseLife = 100;
         }
 
@@ -109,6 +115,21 @@ namespace Engine.Objects
             CurrentVitality = BaseVitality + Buffs.Sum(b => b.Vitality);
             CurrentIntellect = BaseIntellect + Buffs.Sum(b => b.Intellect);
             CurrentAgility = BaseAgility + Buffs.Sum(b => b.Agility);
+
+            CurrentMinDamage += CurrentStrength * ObjectConstants.DamagePerStrength;
+            CurrentMaxDamage += CurrentStrength * ObjectConstants.DamagePerStrength;
+            CurrentDefense += CurrentStrength * ObjectConstants.DefensePerStrength;
+
+            CurrentDefense += CurrentAgility * ObjectConstants.AtkSpeedPerAgility;
+            CurrentDefense += CurrentAgility * ObjectConstants.DodgePerAgility;
+
+            CurrentMaxLife += CurrentVitality * ObjectConstants.LifePerVitality;
+            LifeRegen += CurrentVitality * ObjectConstants.LifeRegPerVitality;
+            CurrentMaxMana += CurrentVitality * ObjectConstants.ManaPerVitality;
+            ManaRegen += CurrentVitality * ObjectConstants.ManaRegPerVitality;
+
+            MagicDamage += CurrentIntellect * ObjectConstants.MagicDamagePerInt;
+            ManaRegen += CurrentIntellect * ObjectConstants.ManaRegPerInt;
         }
 
         /// <summary>

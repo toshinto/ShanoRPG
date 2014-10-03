@@ -34,6 +34,9 @@ namespace Engine.Systems
             if (res.Success)
                 loadTypes();
 
+            if (!res.Success)
+                throw new Exception();
+
             return res.Success;
         }
 

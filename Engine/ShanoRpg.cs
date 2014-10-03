@@ -18,7 +18,7 @@ namespace Engine
         /// <summary>
         /// The frames per second we aim to run at. 
         /// </summary>
-        const int FPS = 60;
+        const int FPS = 1000;
 
         //public InputDevice LocalInput;
 
@@ -89,6 +89,7 @@ namespace Engine
 
             a.Hero = h;
             a.Game = this;
+            a.Map = GameMap;
 
             h.AddAbility(a);
         }
@@ -142,7 +143,8 @@ namespace Engine
 
         public IEnumerable<IUnit> GetNearbyUnits(Hero h)
         {
-            return GameMap.GetUnitsInRect(h.Location - (Vector)Constants.ClientParams.WindowSize / 2, Constants.ClientParams.WindowSize);
+            var unitRange = (Vector)Constants.ClientParams.WindowSize / 2 + 1;
+            return GameMap.GetUnitsInRect(h.Location - unitRange, unitRange * 2);
         }
 
         public void GetNearbyTiles(IHero h, ref MapTile[,] tileMap, out double heroX, out double heroY)

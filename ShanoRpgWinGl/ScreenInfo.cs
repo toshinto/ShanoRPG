@@ -29,6 +29,12 @@ namespace ShanoRpgWinGl
             return GameToScreen(p.X, p.Y);
         }
 
+        internal static Vector2 GameToUi(Vector2 v)
+        {
+            return ScreenToUi(GameToScreen(v));
+        }
+
+
         /// <summary>
         /// Gets the screen co-ordinates of the given in-game point. 
         /// </summary>

@@ -174,15 +174,6 @@ namespace ShanoRpgWinGl
                 XDirection = dx,
                 YDirection = dy
             };
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             //get terrain, hero info. 
             double x, y;
@@ -194,6 +185,15 @@ namespace ShanoRpgWinGl
             //update cameraInfo
             ScreenInfo.CenterPoint = new Vector2((float)x, (float)y);
             ScreenInfo.ScreenSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             //cameraInfo.ScreenSize = new Point(800, 480);
 
             if (Server != null)
@@ -212,16 +212,18 @@ namespace ShanoRpgWinGl
                 //interface
                 mainInterface.Draw(spriteBatch);
 
-                //position
+                //debug stuff
                 var mp = ScreenInfo.ScreenToUi(Mouse.GetState().Position);
-                var debugStr = string.Format(
+                var sFps =
+                    "FPS: " + (1000 / gameTime.ElapsedGameTime.TotalMilliseconds).ToString("00");
+                var sUiCoord = string.Format(
                     "UI: {0} {1}", mp.X.ToString("0.00"), mp.Y.ToString("0.00"));
+                var sGameCoord = string.Format(
+                    "Game: {0} {1}", localHero.Location.X.ToString("0.00"), localHero.Location.Y.ToString("0.00"));
 
-                TextureCache.MainFont.DrawString(spriteBatch, debugStr, Color.Black, 24, 24, 0.0f);
-
-                //fps
-                var fps = (1000 / gameTime.ElapsedGameTime.TotalMilliseconds).ToString("00");
-                TextureCache.MainFont.DrawString(spriteBatch, fps, Color.Goldenrod, 10, 10, 0.0f);
+                TextureCache.MainFont.DrawString(spriteBatch, sFps, Color.Goldenrod, 24, 18);
+                TextureCache.MainFont.DrawString(spriteBatch, sGameCoord, Color.Black, 24, 2 * 24);
+                TextureCache.MainFont.DrawString(spriteBatch, sUiCoord, Color.Black, 24, 3 * 24);
 
                 //end drawing
                 spriteBatch.End();
@@ -230,6 +232,8 @@ namespace ShanoRpgWinGl
             base.Draw(gameTime);
         }
 
+
+        MapTile[,] drawnTiles;
         private void drawTerrain()
         {
             int xRange = Constants.Game.ScreenWidth / 2,

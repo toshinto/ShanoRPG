@@ -34,21 +34,23 @@ namespace ShanoRpgWinGl.Objects
         {
             var toRemove = new HashSet<int>(Units.Values.Select(gu => gu.Unit.Guid)); // mark all units for removal initially
 
+            //add new units, or mark them as not-to-remove
             foreach(var u in newUnits)
             {
                 if (this.Units.ContainsKey(u.Guid))
-                    toRemove.Remove(u.Guid);             // don't remove if its in the new list
+                    toRemove.Remove(u.Guid);            // don't remove if its in the new list
                 else
-                    addUnit(u);                         //an (actually) new guy 
+                    addUnit(u);                         // an (actually) new guy 
             }
 
-            foreach (var guid in toRemove)  //remove outdated guys
-                Units.Remove(guid);
+            foreach (var guid in toRemove)  //remove old units
+                if (guid != LocalGuid)
+                    Units.Remove(guid);
 
             // update everyone who is still around
             foreach (var u in Units.Values)
             {
-                u.Sprite.Update(msElapsed);
+                u.Update(msElapsed);
             }
         }
 
