@@ -21,6 +21,6 @@ namespace Engine.Objects
             this.ItemBonuses = itemBonuses;
             this.ItemType = itemType;
         }
-
+        public Swap()
     }
 }

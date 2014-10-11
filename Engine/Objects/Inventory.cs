@@ -24,7 +24,7 @@ namespace Engine.Objects
             Backpack = new Item[BackpackWidth, BackpackHeight];
         }
 
-        public bool TryPickupItem(Item i)
+        public bool TryPickupItem(GameItem i)
         {
             //continue only if there is space in the backpack. 
             if(backpackItemCount == BackpackSize)
@@ -37,30 +37,43 @@ namespace Engine.Objects
                 for (int k = 0; k < BackpackHeight; k++)
                     if (Backpack[j, k] == null)
                     {
-                        Backpack[j, k] = i;
+                        Backpack[j, k] = i.Item;
                         backpackItemCount++;
                         return true;
                     }
                 
             return false;
         }
-        public bool TryEquipItem(int backpackX, int backpackY, EquipSlot slot)
+        public bool TryEquipItem(Point backpackSlot, EquipSlot slot)
         {
             //continue only if there is an item in this slot and it is equippable. 
-            if (Backpack[backpackX, backpackY] == null || Backpack[backpackX, backpackY].ItemType == EquipSlot.None)
+            if (Backpack[backpackSlot.X, backpackSlot.Y] == null || Backpack[backpackSlot.X, backpackSlot.Y].ItemType == EquipSlot.None)
                 return false;
 
             Item oldItem = null;
             EquippedItems.TryGetValue(slot, out oldItem);   //ako ima item go vzema, inache ne bara oldItem
-            EquippedItems[slot] = Backpack[backpackX, backpackY];
-            Backpack[backpackX, backpackY] = oldItem; 
+            EquippedItems[slot] = Backpack[backpackSlot.X, backpackSlot.Y];
+            Backpack[backpackSlot.X, backpackSlot.Y] = oldItem; 
             return true;
         }
-        public bool TryDropItem(int backpackX, int backpackY)
+        public Item DropItem(Point backpackSlot)
         {
-            if (Backpack[backpackX, backpackY] != null)
-                return true;
-            else return false;
+            if (Backpack[backpackSlot.X, backpackSlot.Y] != null)
+                return Backpack[backpackSlot.X, backpackSlot.Y];
+            else return null;
+        }
+        public Item DropItem(EquipSlot slot)
+        {
+            if (EquippedItems[slot] != null)
+                return EquippedItems[slot];
+            else return null;
+        }
+        public void MoveItem(Point from, Point to)
+        {
+            Item temp;
+            temp = Backpack[to.X, to.Y];
+            Backpack[to.X, to.Y] = Backpack[from.X, from.Y]
+            Backpack[from.X, from.Y] = temp;
         }
     }
 }
