@@ -72,7 +72,7 @@ namespace Engine.Objects
         {
             Item temp;
             temp = Backpack[to.X, to.Y];
-            Backpack[to.X, to.Y] = Backpack[from.X, from.Y]
+            Backpack[to.X, to.Y] = Backpack[from.X, from.Y];
             Backpack[from.X, from.Y] = temp;
         }
     }
