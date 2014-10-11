@@ -14,6 +14,11 @@ namespace ShanoRpgWinGl.UI
 
         Color BackColor = Color.DarkGray.SetAlpha(100);
 
+        public override void Update(int msElapsed)
+        {
+            this.AbsolutePosition = ScreenInfo.ScreenToUi(mouseState.Position - new Point(10, 22));
+            base.Update(msElapsed);
+        }
 
         public override void Draw(SpriteBatch sb)
         {
@@ -21,7 +26,7 @@ namespace ShanoRpgWinGl.UI
             base.Draw(sb);
         }
 
-        public void ShowTooltip(Vector2 mp, string text)
+        public void Show(string text)
         {
 
         }

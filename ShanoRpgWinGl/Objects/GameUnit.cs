@@ -18,6 +18,9 @@ namespace ShanoRpgWinGl.Objects
 
         public IUnit Unit { get; private set; }
 
+
+        public Vector2? CustomLocation;
+
         public Point CenterPoint
         {
             get { return ScreenPosition + ScreenSize.DivideBy(2); }
@@ -33,7 +36,7 @@ namespace ShanoRpgWinGl.Objects
         {
             Sprite.Update(msElapsed);
 
-            var loc = Unit.Location.ToVector2();
+            var loc = CustomLocation ?? Unit.Location.ToVector2();
             Vector2 sz = new Vector2((float)Unit.Size / 2);
 
             var posLo = ScreenInfo.GameToUi(loc - sz);
@@ -44,20 +47,24 @@ namespace ShanoRpgWinGl.Objects
 
             base.Update(msElapsed);
         }
-
-        public void Draw(SpriteBatch sb)
+        
+        public override void Draw(SpriteBatch sb)
         {
             var moving = false;
             Sprite.Period = moving ? 100 : 1000;
 
             Vector2 sz = new Vector2((float)Unit.Size);
-            Sprite.Draw(sb, ScreenPosition, ScreenSize);
 
-            if (MouseOver || Settings.Default.AlwaysShowHealthBars)
+            var c = Unit.IsDead ? Color.LightGray : Color.White;
+            Sprite.Draw(sb, ScreenPosition, ScreenSize, c);
+
+            if ((MouseOver || Settings.Default.AlwaysShowHealthBars) && !Unit.IsDead)
             {
-                var barBackColor = Color.DarkGray.SetAlpha(210);
+                var barBackColor = Color.Black.SetAlpha(100);
                 var barForeColor = Color.DarkRed.SetAlpha(210);
-                UI.ValueBar.DrawValueBar(sb, Unit.CurrentLife, Unit.CurrentMaxLife, ScreenPosition, new Point(ScreenSize.X, 20), barBackColor, barForeColor);
+                var barHeight = ScreenInfo.UiToScreen(0.03);
+                var barPosition = ScreenPosition - new Point(0, barHeight);
+                UI.ValueBar.DrawValueBar(sb, Unit.CurrentLife, Unit.CurrentMaxLife, barPosition, new Point(ScreenSize.X, barHeight), barBackColor, barForeColor);
                 //TextureCache.MainFont.DrawString(sb, Unit.CurrentLife.ToString(), Color.Red, ScreenPosition.X, ScreenPosition.Y, 0.5f, 1f);
             }
         }

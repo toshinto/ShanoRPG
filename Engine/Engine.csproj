@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DamageType.cs" />
+    <Compile Include="Common\EquipSlot.cs" />
     <Compile Include="Common\Rnd.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Maps\GameMap.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Maps\WorldMap.cs" />
     <Compile Include="Objects\Buff.cs" />
     <Compile Include="Objects\Doodad.cs" />
+    <Compile Include="Objects\GameItem.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="Common\Point.cs" />
     <Compile Include="Objects\Inventory.cs" />
@@ -118,6 +120,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Network\Network.csproj">
+      <Project>{d2fa8685-b964-498d-a34f-d191be2cba6b}</Project>
+      <Name>Network</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Output\IO.csproj">
       <Project>{dc89987d-5817-4f1d-95ca-80c024c8d6bb}</Project>
       <Name>IO</Name>

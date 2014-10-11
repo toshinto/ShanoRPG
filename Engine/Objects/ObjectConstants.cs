@@ -7,8 +7,8 @@ namespace Engine.Objects
 {
      static class ObjectConstants
     {
-        public const double BaseLifeRegen = 2;
-        public const double BaseManaRegen = 5;
+        public const double BaseLifeRegen = 0.5;
+        public const double BaseManaRegen = 2;
         public const double BaseMagicDamage = 0;
 
         // are those used anywhere?

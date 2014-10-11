@@ -22,9 +22,6 @@ namespace Engine.Objects
         public Inventory()
         {
             Backpack = new Item[BackpackWidth, BackpackHeight];
-            //ItemsEquiped.Add(EquipSlot.Head, null);
-            //ItemsEquiped.Add(EquipSlot.Torso, null);  //nqma nujda ot teq
-            //ItemsEquiped.Add(EquipSlot.Hand, null);
         }
 
         public bool TryPickupItem(Item i)

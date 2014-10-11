@@ -13,43 +13,63 @@ namespace ShanoRpgWinGl
     {
         Rectangle[] keys = new Rectangle[256];
 
-        public readonly Texture2D Texture;
+        private readonly int _baseHeight;
 
-        public readonly float Scale;
+        public readonly float _baseScale;
+
+        public double Height
+        {
+            get { return _baseHeight * Scale; }
+        }
+
+        public double Scale
+        {
+            get {  return _baseScale * ScreenInfo.FontScale; }
+        }
+
+        public readonly Texture2D Texture;
 
         public TextureFont(ContentManager content, string name, float scale = 1f)
         {
-            this.Scale = scale;
+            this._baseScale = scale;
             this.Texture = content.Load<Texture2D>(name);
 
             var xmlSchema = new XmlDocument();
             xmlSchema.Load("Content\\" + name + ".xml");
 
-            foreach(XmlNode node in xmlSchema.SelectNodes("fontMetrics/character"))
+            foreach(XmlNode node in xmlSchema.SelectNodes("font/chars/char"))
             {
-                var sId = node.Attributes.GetNamedItem("key").Value;
+                //var sId = node.Attributes.GetNamedItem("key").Value;
 
-                var id = shanoParse(sId);
-                var x = shanoParse(node.SelectSingleNode("x").InnerText);
-                var y = shanoParse(node.SelectSingleNode("y").InnerText);
-                var w = shanoParse(node.SelectSingleNode("width").InnerText);
-                var h = shanoParse(node.SelectSingleNode("height").InnerText);
+                //var id = parseInt(sId);
+                var id = parseInt(node.Attributes.GetNamedItem("id").InnerText);
+                var x = parseInt(node.Attributes.GetNamedItem("x").InnerText);
+                var y = parseInt(node.Attributes.GetNamedItem("y").InnerText);
+                var w = parseInt(node.Attributes.GetNamedItem("width").InnerText);
+                var h = parseInt(node.Attributes.GetNamedItem("height").InnerText);
                 if(x == -1 || y == -1 || w == -1 || h == -1 || id == -1)
                     continue;
 
                 keys[id] = new Rectangle(x, y + 1, w, h - 1);
+                _baseHeight = Math.Max(_baseHeight, w);
             }
         }
 
         public TextureFont(TextureFont f, float relativeScale = 1f)
         {
             this.Texture = f.Texture;
-            this.Scale = f.Scale * relativeScale;
+            this._baseScale = f._baseScale * relativeScale;
 
             this.keys = f.keys.Clone() as Rectangle[];
         }
 
         public int CharacterSpacing { get; set; }
+
+        public void DrawMultilineString(SpriteBatch sb, string text, Color col, int x, int y, float xAnchor = 0.0f, float yAnchor = 0.5f)
+        {
+            var lines = text.Split('\n');
+
+        }
 
         public void DrawString(SpriteBatch sb, string text, Color col, int x, int y, float xAnchor = 0.0f, float yAnchor = 0.5f)
         {
@@ -72,7 +92,8 @@ namespace ShanoRpgWinGl
         public void DrawChar(SpriteBatch sb, char c, Color col, int x, int y, float yAnchor = 0.5f)
         {
             if(keys[c] == Rectangle.Empty)
-                throw new ArgumentOutOfRangeException("c");
+                throw new ArgumentOutOfRangeException("Character '" + c + "' does not exist in the current font. ");
+
             var sz = getSize(c);
 
             y -= (int)(yAnchor * sz.Y);
@@ -84,13 +105,11 @@ namespace ShanoRpgWinGl
             return new Point((int)(Scale * keys[c].Width), (int)(Scale * keys[c].Height));
         }
 
-        private int shanoParse(string i)
+        private int parseInt(string i)
         {
-            int id;
-            if (int.TryParse(i, out id))
-                return id;
-            else
-                return -1;
+            int id = -1;
+            int.TryParse(i, out id);
+            return id;
         }
     }
 }

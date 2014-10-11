@@ -17,6 +17,5 @@ namespace IO
         int CurrentCooldown { get; }
         int Cooldown { get; }
         int ManaCost { get; }
-        int LifeCost { get; }
     }
 }

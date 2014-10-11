@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using ShanoRpgWinGl.Objects;
 using ShanoRpgWinGl.Sprites;
+using ShanoRpgWinGl.Properties;
 #endregion
 
 namespace ShanoRpgWinGl
@@ -175,12 +176,23 @@ namespace ShanoRpgWinGl
                 YDirection = dy
             };
 
-            //get terrain, hero info. 
+            Settings.Default.AlwaysShowHealthBars = kbd.GetPressedKeys().Contains(Keys.C);
+
+            //terrain
             double x, y;
             Server.GetNearbyTiles(ref mapTiles, out x, out y);
 
+            //units
             entities = Server.GetUnits()
                 .Where(h => h != localHero);
+
+            //doodads and sfx?
+
+
+            // overrides the hero position to the one we've just received. 
+            // this is a problem in local games since the ObjectManager
+            // queries a unit's more up-to-date position than in the update. 
+            ObjectManager.LocalGameHero.CustomLocation = new Vector2((float)x, (float)y);
 
             //update cameraInfo
             ScreenInfo.CenterPoint = new Vector2((float)x, (float)y);
@@ -194,7 +206,6 @@ namespace ShanoRpgWinGl
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            //cameraInfo.ScreenSize = new Point(800, 480);
 
             if (Server != null)
             {
@@ -207,7 +218,7 @@ namespace ShanoRpgWinGl
                 //hero n units
                 ObjectManager.Draw(spriteBatch);
 
-                //effects..
+                //doodads and effects?
 
                 //interface
                 mainInterface.Draw(spriteBatch);

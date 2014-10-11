@@ -38,7 +38,12 @@ namespace ShanoRpgWinGl.UI
             SpriteCache.BlankTexture.Draw(sb, position, size, backColor);
 
             if (max != 0)
+            {
+                var borderSize = size.Y / 10;
+                position += new Point(borderSize, borderSize);
+                size -= new Point(borderSize * 2, borderSize * 2);
                 SpriteCache.BlankTexture.Draw(sb, position, new Point((int)(size.X * value / max), size.Y), foreColor);
+            }
             if (!string.IsNullOrEmpty(text))
             {
                 var textPos = position + size.DivideBy(2);

@@ -61,9 +61,10 @@ namespace Engine.Objects
 
             protected set
             {
-                if (value != currentMaxMana && currentMaxMana != 0 && !IsDead)
+                if (value != currentMaxMana)
                 {
-                    CurrentLife = CurrentLife * value / currentMaxMana;
+                    if (currentMaxMana != 0 && !IsDead)
+                        CurrentLife = CurrentLife * value / currentMaxMana;
                     currentMaxMana = value;
                 }
             }
@@ -156,7 +157,8 @@ namespace Engine.Objects
             this.BaseDodge = 5;
 
             this.BaseLife = 5;
-            this.CurrentLife = 5;
+            this.CurrentMaxLife = 5;
+
         }
 
         /// <summary>
@@ -198,6 +200,12 @@ namespace Engine.Objects
         {
             this.UpdateBuffs(msElapsed);
             this.UpdateMovement(msElapsed);
+
+            this.CurrentMana += msElapsed * this.ManaRegen / 1000;
+            this.CurrentLife += msElapsed * this.LifeRegen / 1000;
+
+            this.CurrentLife = Math.Min(this.CurrentMaxLife, this.CurrentLife);
+            this.CurrentMana = Math.Min(this.CurrentMaxMana, this.CurrentMana);
         }
 
         public bool DamageUnit(Unit u, DamageType damageType, double amount)

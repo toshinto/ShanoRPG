@@ -17,7 +17,7 @@ public class Attack : Ability
     }
 
 
-    public override void OnCast(Vector pos)
+    public override void OnCast(CastEventArgs e, Vector pos)
     {
         const float dist = 1f;
         const double angle = Math.PI / 4;
@@ -30,13 +30,16 @@ public class Attack : Ability
             .Where(u => u.IsNonPlayable())
             .OrderBy(u => u.Location.DistanceTo(Hero.Location));
 
-        if (t.Any())
+        if (!t.Any())
         {
-            var target = t.First();
-            var dmgAmount = Rnd.Next((int)Hero.CurrentMinDamage, (int)Hero.CurrentMaxDamage + 1);
-
-            Hero.DamageUnit(t.First(), DamageType.Physical, dmgAmount);
+            e.Success = false;
+            return;
         }
+
+        var target = t.First();
+        var dmgAmount = Rnd.Next((int)Hero.CurrentMinDamage, (int)Hero.CurrentMaxDamage + 1);
+
+        Hero.DamageUnit(t.First(), DamageType.Physical, dmgAmount);
     }
 
     public override void OnUpdate(int msElapsed)

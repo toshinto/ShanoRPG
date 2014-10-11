@@ -18,7 +18,7 @@ namespace Engine
         /// <summary>
         /// The frames per second we aim to run at. 
         /// </summary>
-        const int FPS = 1000;
+        const int FPS = 60;
 
         //public InputDevice LocalInput;
 
@@ -72,6 +72,7 @@ namespace Engine
             {
                 Location = new Vector(5, 5),
             };
+            c.CurrentLife = c.CurrentMaxLife;
 
             AddCreature(c);
         }
