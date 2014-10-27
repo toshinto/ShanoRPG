@@ -140,5 +140,10 @@ namespace Engine.Objects
         {
             return new Point((int)x, (int)y);
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}, {1}", x.ToString("0.00"), y.ToString("0.00"));
+        }
     }
 }

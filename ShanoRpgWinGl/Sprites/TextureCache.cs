@@ -30,7 +30,7 @@ namespace ShanoRpgWinGl.Sprites
             loadTextures();
 
             //load fonts
-            MainFont = new TextureFont(content, "Fonts\\UI", 0.8f);
+            MainFont = new TextureFont(content, "Fonts\\UI", 0.5f);
         }
 
         /// <summary>

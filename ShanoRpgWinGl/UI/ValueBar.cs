@@ -27,18 +27,26 @@ namespace ShanoRpgWinGl.UI
 
         public override void Draw(SpriteBatch sb)
         {
+            var hasText = ShowText && MaxValue != 0;
+            var text = hasText ? (Value.ToString("0") + "/" + MaxValue.ToString("0")) : string.Empty;
 
-            SpriteCache.BlankTexture.Draw(sb, ScreenPosition, ScreenSize, BackColor);
+            DrawValueBar(sb, Value, MaxValue, ScreenPosition, ScreenSize, BackColor, ForeColor, text);
+        }
 
-            if (MaxValue > 0)
+        public static void DrawValueBar(SpriteBatch sb, double value, double max, Point position, Point size, Color backColor, Color foreColor, string text = "")
+        {
+            SpriteCache.BlankTexture.Draw(sb, position, size, backColor);
+
+            if (max != 0)
             {
-                SpriteCache.BlankTexture.Draw(sb, ScreenPosition, new Point((int)(ScreenSize.X * Value / MaxValue), ScreenSize.Y), ForeColor);
+                var borderSize = size.Y / 10;
+                position += new Point(borderSize, borderSize);
+                size -= new Point(borderSize * 2, borderSize * 2);
+                SpriteCache.BlankTexture.Draw(sb, position, new Point((int)(size.X * value / max), size.Y), foreColor);
             }
-
-            if (ShowText)
+            if (!string.IsNullOrEmpty(text))
             {
-                var text = MaxValue != 0 ? (Value.ToString("0") + "/" + MaxValue.ToString("0")) : "N/A";
-                var textPos = new Point(ScreenPosition.X + ScreenSize.X / 2, ScreenPosition.Y + ScreenSize.Y / 2);
+                var textPos = position + size.DivideBy(2);
                 TextureCache.MainFont.DrawString(sb, text, Color.White, textPos.X, textPos.Y, 0.5f, 0.5f);
             }
         }

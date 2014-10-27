@@ -7,7 +7,7 @@ using Engine.Objects;
 
 namespace Engine.Maps
 {
-    class GameMap
+    public class GameMap
     {
         static readonly Vector MapCellSize = new Vector(5, 5);
 
@@ -60,6 +60,8 @@ namespace Engine.Maps
 
             //pick the units in this rectangle. 
             var us = units.RangeQuery(windowPos, windowSize);
+
+            Console.WriteLine("query for {0},{1} returned: {2}", windowPos, windowSize, us.Count());
 
             //get exactly the units within the circle. 
             var rsq = range * range;

@@ -9,7 +9,7 @@ namespace Engine.Objects
     /// <summary>
     /// Represents any in-game objects which are not units, such as trees, rocks, barrels, projectiles. 
     /// </summary>
-    class Doodad : GameObject
+    public class Doodad : GameObject
     {
 
 

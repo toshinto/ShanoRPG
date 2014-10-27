@@ -81,7 +81,9 @@ namespace Engine.Objects
         public Hero()
             : base()
         {
-            
+            this.BaseMana = 5;
+            this.CurrentMaxMana = 5;
+
         }
 
         
@@ -97,6 +99,12 @@ namespace Engine.Objects
             this.BaseMoveSpeed = 5;
             this.Size = 0.6;
             this.Model = "hero";
+
+            this.BaseStrength = 5;
+            this.BaseVitality= 5;
+            this.BaseIntellect = 5;
+            this.BaseAgility = 5;
+
             CurrentLife = BaseLife = 100;
         }
 
@@ -109,6 +117,21 @@ namespace Engine.Objects
             CurrentVitality = BaseVitality + Buffs.Sum(b => b.Vitality);
             CurrentIntellect = BaseIntellect + Buffs.Sum(b => b.Intellect);
             CurrentAgility = BaseAgility + Buffs.Sum(b => b.Agility);
+
+            CurrentMinDamage += CurrentStrength * ObjectConstants.DamagePerStrength;
+            CurrentMaxDamage += CurrentStrength * ObjectConstants.DamagePerStrength;
+            CurrentDefense += CurrentStrength * ObjectConstants.DefensePerStrength;
+
+            CurrentDefense += CurrentAgility * ObjectConstants.AtkSpeedPerAgility;
+            CurrentDefense += CurrentAgility * ObjectConstants.DodgePerAgility;
+
+            CurrentMaxLife += CurrentVitality * ObjectConstants.LifePerVitality;
+            LifeRegen += CurrentVitality * ObjectConstants.LifeRegPerVitality;
+            CurrentMaxMana += CurrentVitality * ObjectConstants.ManaPerVitality;
+            ManaRegen += CurrentVitality * ObjectConstants.ManaRegPerVitality;
+
+            MagicDamage += CurrentIntellect * ObjectConstants.MagicDamagePerInt;
+            ManaRegen += CurrentIntellect * ObjectConstants.ManaRegPerInt;
         }
 
         /// <summary>
@@ -117,7 +140,7 @@ namespace Engine.Objects
         /// <param name="msElapsed"></param>
         protected override void UpdateMovement(int msElapsed)
         {
-            var dx = Math.Sign(MovementState.XDirection);
+            var dx = Math.Sign(MovementState.XDirection);   // make sure its [-1; 1]
             var dy = Math.Sign(MovementState.YDirection);
 
             var dist = this.CurrentMoveSpeed * msElapsed / 1000;
@@ -125,7 +148,7 @@ namespace Engine.Objects
             if (dx != 0 || dy != 0)
             {
                 if (dx * dy != 0)                   // if we are moving on a diagonal
-                    dist = dist / Math.Sqrt(2);     // make the x/y component
+                    dist = dist / Math.Sqrt(2);     // scale the x/y components
                 this.Location += new Vector(dx, dy) * dist;
             }
         }
@@ -150,14 +173,24 @@ namespace Engine.Objects
         public virtual void OnSpecialAction(Command c, byte[] p)
         {
             Ability actionAbility;
-
             abilities.TryGetValue(p.GetString(), out actionAbility);
 
+            var manaCost = actionAbility.ManaCost;
+
+            //check cooldown
             if (actionAbility.CurrentCooldown > 0)
                 return;
 
-            actionAbility.CurrentCooldown = actionAbility.Cooldown;
-            actionAbility.Cast(null);
+            //check life, mana
+            if (this.CurrentMana < manaCost)
+                return;
+
+            var result = actionAbility.Cast(null);
+            if (result.Success)
+            {
+                actionAbility.CurrentCooldown = actionAbility.Cooldown;
+                this.CurrentMana -= manaCost;
+            }
         }
 
         public override void Update(int msElapsed)

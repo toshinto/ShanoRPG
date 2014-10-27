@@ -18,5 +18,10 @@ namespace ShanoRpgWinGl
         {
             return new Vector2((float)v.X, (float)v.Y);
         }
+
+        public static Point DivideBy(this Point p, int divisor)
+        {
+            return new Point(p.X / divisor, p.Y / divisor);
+        }
     }
 }

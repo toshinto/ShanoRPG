@@ -9,6 +9,9 @@ using ShanoRpgWinGl.Sprites;
 
 namespace ShanoRpgWinGl.UI
 {
+    /// <summary>
+    /// Represents the in-game panel showing a hero's statistics. 
+    /// </summary>
     class HeroUI : UserControl
     {
         public readonly IHero Hero;
@@ -53,6 +56,8 @@ namespace ShanoRpgWinGl.UI
 
         public readonly ValueBar manaBar;
 
+        public readonly ValueBar xpBar;
+
         public HeroUI(IHero h)
         {
             Size = new Vector2(1.2f, 0.45f);
@@ -72,8 +77,16 @@ namespace ShanoRpgWinGl.UI
             manaBar = new ValueBar()
             {
                 Size = hpBar.Size,
-                RelativePosition = new Vector2(Anchor, hpBar.Bottom + Anchor),
+                RelativePosition = new Vector2(Anchor, hpBar.Bottom),
                 ForeColor = Color.DarkBlue,
+                ClickThrough = true,
+                ShowText = true,
+            };
+            xpBar = new ValueBar()
+            {
+                Size = hpBar.Size,
+                RelativePosition = new Vector2(Anchor, manaBar.Bottom),
+                ForeColor = Color.Goldenrod,
                 ClickThrough = true,
                 ShowText = true,
             };
@@ -102,7 +115,6 @@ namespace ShanoRpgWinGl.UI
 
         public override void Update(int msElapsed)
         {
-
             strength.Value = Hero.CurrentStrength.ToString("0");
             agility.Value = Hero.CurrentAgility.ToString("0");
             intellect.Value = Hero.CurrentIntellect.ToString("0");

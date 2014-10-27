@@ -7,6 +7,7 @@ namespace IO
 {
     public interface IUnit : IGameObject
     {
+        bool IsDead { get; }
 
         double CurrentLife { get; }
         double CurrentMaxLife { get; }

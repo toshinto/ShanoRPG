@@ -219,7 +219,10 @@ namespace ShanoRpgWinGl.UI
                 if (!oldMouseOver)  // if it wasn't over before, fire the Mouse event. 
                 {
                     if (MouseEnter != null)
+                    {
                         MouseEnter();
+                        Console.WriteLine("MouseEnter " + this.GetType().Name);
+                    }
                 }
                 else
                 {

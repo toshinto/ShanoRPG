@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using ShanoRpgWinGl.Objects;
 using ShanoRpgWinGl.Sprites;
+using ShanoRpgWinGl.Properties;
 #endregion
 
 namespace ShanoRpgWinGl
@@ -174,6 +175,28 @@ namespace ShanoRpgWinGl
                 XDirection = dx,
                 YDirection = dy
             };
+
+            Settings.Default.AlwaysShowHealthBars = kbd.GetPressedKeys().Contains(Keys.C);
+
+            //terrain
+            double x, y;
+            Server.GetNearbyTiles(ref mapTiles, out x, out y);
+
+            //units
+            entities = Server.GetUnits()
+                .Where(h => h != localHero);
+
+            //doodads and sfx?
+
+
+            // overrides the hero position to the one we've just received. 
+            // this is a problem in local games since the ObjectManager
+            // queries a unit's more up-to-date position than in the update. 
+            ObjectManager.LocalGameHero.CustomLocation = new Vector2((float)x, (float)y);
+
+            //update cameraInfo
+            ScreenInfo.CenterPoint = new Vector2((float)x, (float)y);
+            ScreenInfo.ScreenSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
         }
 
         /// <summary>
@@ -183,18 +206,6 @@ namespace ShanoRpgWinGl
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            //get terrain, hero info. 
-            double x, y;
-            Server.GetNearbyTiles(ref mapTiles, out x, out y);
-
-            entities = Server.GetUnits()
-                .Where(h => h != localHero);
-
-            //update cameraInfo
-            ScreenInfo.CenterPoint = new Vector2((float)x, (float)y);
-            ScreenInfo.ScreenSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //cameraInfo.ScreenSize = new Point(800, 480);
 
             if (Server != null)
             {
@@ -207,21 +218,23 @@ namespace ShanoRpgWinGl
                 //hero n units
                 ObjectManager.Draw(spriteBatch);
 
-                //effects..
+                //doodads and effects?
 
                 //interface
                 mainInterface.Draw(spriteBatch);
 
-                //position
+                //debug stuff
                 var mp = ScreenInfo.ScreenToUi(Mouse.GetState().Position);
-                var debugStr = string.Format(
+                var sFps =
+                    "FPS: " + (1000 / gameTime.ElapsedGameTime.TotalMilliseconds).ToString("00");
+                var sUiCoord = string.Format(
                     "UI: {0} {1}", mp.X.ToString("0.00"), mp.Y.ToString("0.00"));
+                var sGameCoord = string.Format(
+                    "Game: {0} {1}", localHero.Location.X.ToString("0.00"), localHero.Location.Y.ToString("0.00"));
 
-                TextureCache.MainFont.DrawString(spriteBatch, debugStr, Color.Black, 24, 24, 0.0f);
-
-                //fps
-                var fps = (1000 / gameTime.ElapsedGameTime.TotalMilliseconds).ToString("00");
-                TextureCache.MainFont.DrawString(spriteBatch, fps, Color.Goldenrod, 10, 10, 0.0f);
+                TextureCache.MainFont.DrawString(spriteBatch, sFps, Color.Goldenrod, 24, 18);
+                TextureCache.MainFont.DrawString(spriteBatch, sGameCoord, Color.Black, 24, 2 * 24);
+                TextureCache.MainFont.DrawString(spriteBatch, sUiCoord, Color.Black, 24, 3 * 24);
 
                 //end drawing
                 spriteBatch.End();
@@ -230,6 +243,8 @@ namespace ShanoRpgWinGl
             base.Draw(gameTime);
         }
 
+
+        MapTile[,] drawnTiles;
         private void drawTerrain()
         {
             int xRange = Constants.Game.ScreenWidth / 2,

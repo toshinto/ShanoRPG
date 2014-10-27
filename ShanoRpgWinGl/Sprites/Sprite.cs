@@ -103,6 +103,19 @@ namespace ShanoRpgWinGl
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, (Color)color);
         }
 
+        public void DrawUi(SpriteBatch spriteBatch, Vector2 uiLocation, Vector2 uiSize)
+        {
+            DrawUi(spriteBatch, uiLocation, uiSize, Tint);
+        }
+        public void DrawUi(SpriteBatch spriteBatch, Vector2 uiLocation, Vector2 uiSize, Color color)
+        {
+            var pLoc = ScreenInfo.UiToScreen(uiLocation);
+            var farPos = ScreenInfo.UiToScreen(uiLocation + uiSize);
+            var pSize = farPos - pLoc;
+
+            Draw(spriteBatch, pLoc, pSize, color);
+        }
+
         public void DrawInGame(SpriteBatch spriteBatch, Vector2 gameLocation, Vector2 gameSize)
         {
             DrawInGame(spriteBatch, gameLocation, gameSize, Tint);

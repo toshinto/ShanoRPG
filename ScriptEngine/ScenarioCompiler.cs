@@ -36,6 +36,8 @@ namespace ScriptLib
                     syntaxTrees: syntaxTrees,
                     references: new[] {
                         new MetadataFileReference(getAssemblyDir("mscorlib.dll")),
+                        new MetadataFileReference(getAssemblyDir("System.Core.dll")),
+                        new MetadataFileReference(getAssemblyDir("System.dll")),
                         new MetadataFileReference(getLocalDir("Engine.dll")),
                         new MetadataFileReference(getLocalDir("IO.dll")),
                     },

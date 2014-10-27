@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Maps;
 using Engine.Objects;
 using IO;
 
@@ -11,9 +12,19 @@ namespace Engine.Systems
 {
     public abstract class Ability : IAbility
     {
+        public class CastEventArgs
+        {
+            /// <summary>
+            /// Gets or sets whether the spell cast was successful. True by default. 
+            /// </summary>
+            public bool Success = true;
+
+        }
+
         public Hero Hero { get; internal set; }
 
         public ShanoRpg Game { get; internal set; }
+        public GameMap Map { get; internal set; }
 
         public string Name { get; set; }
 
@@ -25,9 +36,8 @@ namespace Engine.Systems
 
         public readonly SpellType AbilityType;
 
-        public virtual int Cooldown { get { return 1000; } }
+        public int Cooldown { get; set; }
         public virtual int ManaCost { get { return 5; } }
-        public virtual int LifeCost { get { return 0; } }
 
         /// <summary>
         /// Creates an ability host for the given hero. 
@@ -39,20 +49,24 @@ namespace Engine.Systems
         }
 
 
-        internal void Cast(object target) //wtf
+        internal CastEventArgs Cast(object target) //wtf
         {
+            var e = new CastEventArgs();
             switch (AbilityType)
             {
                 case SpellType.NoTarget:
-                    OnCast();
+                    OnCast(e);
                     break;
                 case SpellType.PointTarget:
-                    OnCast(Vector.Zero);
+                    OnCast(e, Vector.Zero);
                     break;
                 case SpellType.UnitTarget:
-                    OnCast((Unit)target);
+                    OnCast(e, (Unit)target);
                     break;
+                default:
+                    throw new Exception("Unrecognized ability type!");
             }
+            return e;
         }
 
         //only one of the following three will get called by the engine. 
@@ -62,17 +76,17 @@ namespace Engine.Systems
         /// <summary>
         /// The function which gets called when a no-target ability is cast. 
         /// </summary>
-        public virtual void OnCast()
+        public virtual void OnCast(CastEventArgs e)
         {
 
         }
 
-        public virtual void OnCast(Vector target)
+        public virtual void OnCast(CastEventArgs e, Vector target)
         {
 
         }
 
-        public virtual void OnCast(Unit target)
+        public virtual void OnCast(CastEventArgs e, Unit target)
         {
 
         }
@@ -80,6 +94,13 @@ namespace Engine.Systems
         internal void Update(int msElapsed)
         {
             CurrentCooldown = Math.Max(0, CurrentCooldown - msElapsed);
+
+            OnUpdate(msElapsed);
+        }
+
+        public virtual void OnUpdate(int msElapsed)
+        {
+
         }
     }
 }
